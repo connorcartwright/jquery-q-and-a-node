@@ -68,13 +68,7 @@ function handlePostRequest(reqData, callback) {
       break;
 
     case 'getQuestionsForPage':
-
-      // DO NOT CALL IF THERE ARE NO QUESTIONS,
-      // ON FRONT END CHECK QUESTION COUNT FIELD
-
       database.pageQueries.getPageQuestions(reqData['id'], function(questions) {
-        var response = '';
-
         var i = 0;
         var loopQ = function (questions) {
           loopQuestions(questions[i], function (answers) {
