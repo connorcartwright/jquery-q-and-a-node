@@ -26,8 +26,6 @@ function updateQuestion(questionID, pageID, questionType, questionName, question
     'Hint1=?, Hint2=?, Hint3=?' +
     'WHERE QuestionID=?;';
 
-  console.log(queryString);
-
   connection.query(queryString, [pageID, questionType, questionName, questionStatement, hint1, hint2, hint3, questionID], function(err, results) {
     if (err) {
       console.log('Error occurred: ' + err.code);
