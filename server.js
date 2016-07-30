@@ -38,20 +38,73 @@ function handleGetRequest(data) {
   console.log('GET REQUEST');
 }
 
-// INSERT QUESTION INTO DATABASE
-// INSERT QUESTION ANSWERS INTO DATABASE
-// RETURN QUESTION ANSWERS
+function updateQuestion(questionData, oldQuestionType) {
+  database.questionQueries.updateQuestion(questionData['questionID'], questionData['pageID'],
+    questionData['questionType'], questionData['questionName'], questionData['questionStatement'],
+    questionData['questionHints'][0], questionData['questionHints'][1], questionData['questionHints'][2],
+    function() {
+      updateQuestionAnswers(questionData, oldQuestionType);
+    });
+}
+
+function updateQuestionAnswers(questionData, oldQuestionType) {
+  var questionID = questionData['questionID'];
+  var questionTypeArea = JSON.parse(questionData['questionTypeArea']);
+
+  if (oldQuestionType === 'Multiple Choice') {
+    database.answerQueries.removeMultipleChoiceAnswers(questionID, function() {
+      addMultipleChoiceAnswers(questionTypeArea, questionID);
+    });
+  } else {
+    database.answerQueries.removeCodingAnswers(questionID, function() {
+      addCodingAnswers(questionTypeArea, questionID);
+    });
+  }
+}
+
+function addMultipleChoiceAnswers(questionTypeArea, questionID) {
+  for (var i = 0; i < questionTypeArea.length; i++) {
+    var option = questionTypeArea[i];
+    database.answerQueries.addMultipleChoiceAnswer(questionID, option.text, option.correct)
+  }
+}
+
+function addCodingAnswers(questionTypeArea, questionID) {
+  for (var i = 0; i < questionTypeArea.length; i++) {
+    var inputOutput = questionTypeArea[i];
+    database.answerQueries.addCodingAnswer(questionID, inputOutput.input, inputOutput.output)
+  }
+}
 
 function handlePostRequest(reqData, callback) {
   switch(reqData['action']) {
     case 'addPage':
-      addPageToDatabase(reqData['id'], reqData['title']);
+      database.pageQueries.addPage(reqData['id'], reqData['title']);
       var response = {
         status  : 200,
-        success : 'Added Successfully',
+        success : 'Added Successfully'
       };
 
       return callback(response);
+
+      break;
+
+    case 'addQuestion':
+      if (reqData['questionID']) {
+        database.questionQueries.getQuestionType(reqData['questionID'], function(oldQuestionType) {
+          updateQuestion(reqData, oldQuestionType);
+        });
+      } else {
+       database.questionQueries.addQuestion(reqData['pageID'], reqData['questionType'],
+         reqData['questionName'], reqData['questionStatement'], reqData['questionHints'][0],
+         reqData['questionHints'][1], reqData['questionHints'][2], function(questionID) {
+           if (reqData['questionType'] === 'Multiple Choice') {
+             addMultipleChoiceAnswers(JSON.parse(reqData['questionTypeArea']), questionID);
+           } else {
+             addCodingAnswers(JSON.parse(reqData['questionTypeArea']), questionID);
+           }
+         });
+      }
 
       break;
 
@@ -84,25 +137,12 @@ function handlePostRequest(reqData, callback) {
                 success: 'Retrieved Successfully',
                 questions: questions
               };
-
               return callback(response);
             }
-
           });
         };
-
         loopQ(questions);
       });
-
-      // });
-      break;
-
-    case 'addQuestion':
-        
-      break;
-
-    case 'updateQuestion':
-      // updateQuestion();
       break;
   }
 }
@@ -122,11 +162,6 @@ function loopQuestions(question, callback) {
 
 function deal(questions) {
 
-}
-
-
-function addPageToDatabase(id, title) {
-  database.pageQueries.addPage(id, title);
 }
 
 // function getRandomInt(min, max) {
