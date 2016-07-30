@@ -47,7 +47,6 @@ function getPageQuestions(pageID, callback) {
       return callback('Error');
     }
     else {
-      console.log('page questions returning');
       return callback(result);
     }
   });
