@@ -27,10 +27,8 @@ function removeCodingAnswers(questionID) {
 }
 
 function getCodingAnswers(questionID, callback) {
-  var queryString = 'SELECT Input, Output' +
+  var queryString = 'SELECT Input, Output ' +
     'FROM CodingAnswers WHERE QuestionID=?';
-
-  console.log(queryString);
 
   connection.query(queryString, [questionID], function(err, result) {
     if (err) {
