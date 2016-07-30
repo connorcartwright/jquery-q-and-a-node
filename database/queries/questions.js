@@ -45,6 +45,8 @@ function updateQuestion(questionID, pageID, questionType, questionName, question
     if (err) {
       console.log('Error occurred: ' + err.code);
     }
+    else {
+      callback();
     }
   });
 }
