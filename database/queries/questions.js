@@ -3,7 +3,7 @@ var connection = require('../connection');
 // NEED THIS TO HAVE A CALLBACK TO GET THE NEW QUESTION ID
 
 function addQuestion(pageID, questionType, questionName, questionStatement,
-                     hint1, hint2, hint3) {
+                     hint1, hint2, hint3, callback) {
 
   var queryString = 'INSERT INTO Questions (PageID, QuestionType, QuestionName, ' +
     'QuestionStatement, Hint1, Hint2, Hint3) VALUES(?, ?, ?, ?, ?, ?, ?)';
@@ -14,13 +14,28 @@ function addQuestion(pageID, questionType, questionName, questionStatement,
       return '';
     }
     else {
-      return results.insertId;
+      return callback(results.insertId);
+    }
+  });
+}
+
+function getQuestionType(questionID, callback) {
+  var queryString = 'SELECT Questions.QuestionType as QuestionType ' +
+    'FROM Questions ' +
+    'WHERE Questions.QuestionID=?';
+
+  connection.query(queryString, [questionID], function(err, results) {
+    if (err) {
+      console.log('Error occurred: ' + err.code);
+    }
+    else {
+      callback(results[0].QuestionType);
     }
   });
 }
 
 function updateQuestion(questionID, pageID, questionType, questionName, questionStatement,
-                        hint1, hint2, hint3) {
+                        hint1, hint2, hint3, callback) {
   var queryString = 'UPDATE Questions ' +
     'SET PageID=?, QuestionType=?, QuestionName=?, QuestionStatement=?, ' +
     'Hint1=?, Hint2=?, Hint3=?' +
@@ -29,6 +44,7 @@ function updateQuestion(questionID, pageID, questionType, questionName, question
   connection.query(queryString, [pageID, questionType, questionName, questionStatement, hint1, hint2, hint3, questionID], function(err, results) {
     if (err) {
       console.log('Error occurred: ' + err.code);
+    }
     }
   });
 }
@@ -58,6 +74,7 @@ function deleteQuestion(questionID) {
 
 module.exports = {
   addQuestion: addQuestion,
+  getQuestionType: getQuestionType,
   updateQuestion: updateQuestion,
   deleteQuestion: deleteQuestion,
   updateQuestionPage: updateQuestionPage
