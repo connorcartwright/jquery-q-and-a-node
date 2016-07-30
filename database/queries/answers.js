@@ -13,7 +13,7 @@ function addCodingAnswer(questionID, input, output) {
   });
 }
 
-function removeCodingAnswers(questionID) {
+function removeCodingAnswers(questionID, callback) {
   var queryString = 'DELETE FROM CodingAnswers WHERE QuestionID=?;';
 
   connection.query(queryString, [questionID], function(err) {
@@ -21,7 +21,7 @@ function removeCodingAnswers(questionID) {
       return 'Error';
     }
     else {
-      return 'Inserted successfully!';
+      callback();
     }
   });
 }
@@ -55,7 +55,7 @@ function addMultipleChoiceAnswer(questionID, optionText, correct) {
   });
 }
 
-function removeMultipleChoiceAnswers(questionID) {
+function removeMultipleChoiceAnswers(questionID, callback) {
   var queryString = 'DELETE FROM MultipleChoiceAnswers WHERE QuestionID=?;';
 
   connection.query(queryString, [questionID], function(err) {
@@ -63,7 +63,7 @@ function removeMultipleChoiceAnswers(questionID) {
       return 'Error';
     }
     else {
-      return 'Inserted successfully!';
+      callback();
     }
   });
 }
