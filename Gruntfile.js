@@ -71,12 +71,12 @@ module.exports = function(grunt) {
 
       watch: {
          js: {
-            files: ['./**/*.js'],
+            files: [
+'<%= config.src %>/**/*.js',
+               'Gruntfile.js',
+               'server.js'
+            ],
             tasks: ['concurrent:lint']
-         },
-         css: {
-            files: ['css/**/*.scss'],
-            tasks: ['scsslint', 'sass']
          }
       },
 
