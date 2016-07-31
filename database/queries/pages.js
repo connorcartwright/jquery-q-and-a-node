@@ -1,8 +1,9 @@
 var connection = require('../connection');
 
 function addPage(pageID, pageTitle) {
-  'use strict';
-  var queryString = 'INSERT IGNORE INTO Pages (PageID, PageTitle) VALUES(?, ?)';
+   'use strict';
+
+   var queryString = 'INSERT IGNORE INTO Pages (PageID, PageTitle) VALUES(?, ?)';
 
    connection.query(queryString, [pageID, pageTitle], function(err, results) {
       if (err) {
@@ -16,12 +17,13 @@ function addPage(pageID, pageTitle) {
 }
 
 function pageCount(pageID, callback) {
-  'use strict';
-  var queryString = 'SELECT COUNT(Pages.PageID) AS "PageCount" ' +
-     'FROM Pages ' +
-     'INNER JOIN Questions ' +
-       'ON Pages.PageID=Questions.PageID ' +
-     'WHERE Pages.PageID=?;';
+   'use strict';
+
+   var queryString = 'SELECT COUNT(Pages.PageID) AS "PageCount" ' +
+      'FROM Pages ' +
+      'INNER JOIN Questions ' +
+        'ON Pages.PageID=Questions.PageID ' +
+      'WHERE Pages.PageID=?;';
 
    connection.query(queryString, [pageID], function(err, result) {
       if (err) {
@@ -35,14 +37,15 @@ function pageCount(pageID, callback) {
 }
 
 function getPageQuestions(pageID, callback) {
-  'use strict';
-  var queryString = 'SELECT Questions.QuestionID AS QuestionID, Questions.QuestionType AS QuestionType, ' +
-     'Questions.QuestionName AS QuestionName, Questions.QuestionStatement AS QuestionStatement, ' +
-     'Questions.Hint1 AS Hint1, Questions.Hint2 AS Hint2, Questions.Hint3 AS Hint3 ' +
-     'FROM Pages ' +
-     'INNER JOIN Questions ' +
-     'ON Pages.PageID=Questions.PageID ' +
-     'WHERE Pages.PageID=?;';
+   'use strict';
+
+   var queryString = 'SELECT Questions.QuestionID AS QuestionID, Questions.QuestionType AS QuestionType, ' +
+      'Questions.QuestionName AS QuestionName, Questions.QuestionStatement AS QuestionStatement, ' +
+      'Questions.Hint1 AS Hint1, Questions.Hint2 AS Hint2, Questions.Hint3 AS Hint3 ' +
+      'FROM Pages ' +
+      'INNER JOIN Questions ' +
+      'ON Pages.PageID=Questions.PageID ' +
+      'WHERE Pages.PageID=?;';
 
    connection.query(queryString, [pageID], function(err, result) {
       if (err) {

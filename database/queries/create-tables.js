@@ -1,18 +1,9 @@
 var connection = require('../connection');
 
-function createTables() {
-  'use strict';
-  createPageTable();
-   createQuestionTable();
-   createCodingAnswerTable();
-   createMultipleChoiceAnswerTable();
-}
-
-var questionQueries = require('./questions');
-
 function createPageTable() {
-  'use strict';
-  connection.query('CREATE TABLE IF NOT EXISTS Pages (' +
+   'use strict';
+
+   connection.query('CREATE TABLE IF NOT EXISTS Pages (' +
      'PageID MEDIUMINT NOT NULL,' +
      'PageTitle VARCHAR(100) NOT NULL,' +
      'PRIMARY KEY (PageID)' +
@@ -20,8 +11,9 @@ function createPageTable() {
 }
 
 function createQuestionTable() {
-  'use strict';
-  connection.query('CREATE TABLE IF NOT EXISTS Questions (' +
+   'use strict';
+
+   connection.query('CREATE TABLE IF NOT EXISTS Questions (' +
      'QuestionID MEDIUMINT NOT NULL AUTO_INCREMENT,' +
      'PageID MEDIUMINT NOT NULL,' +
      'QuestionType VARCHAR(20) NOT NULL,' +
@@ -38,8 +30,9 @@ function createQuestionTable() {
 }
 
 function createCodingAnswerTable() {
-  'use strict';
-  connection.query('CREATE TABLE IF NOT EXISTS CodingAnswers (' +
+   'use strict';
+
+   connection.query('CREATE TABLE IF NOT EXISTS CodingAnswers (' +
      'AnswerID MEDIUMINT NOT NULL AUTO_INCREMENT,' +
      'QuestionID MEDIUMINT NOT NULL,' +
      'Input TEXT NOT NULL,' +
@@ -52,8 +45,9 @@ function createCodingAnswerTable() {
 }
 
 function createMultipleChoiceAnswerTable() {
-  'use strict';
-  connection.query('CREATE TABLE IF NOT EXISTS MultipleChoiceAnswers (' +
+   'use strict';
+
+   connection.query('CREATE TABLE IF NOT EXISTS MultipleChoiceAnswers (' +
      'AnswerID MEDIUMINT NOT NULL AUTO_INCREMENT,' +
      'QuestionID MEDIUMINT NOT NULL,' +
      'OptionText VARCHAR(100) NOT NULL,' +
@@ -63,6 +57,15 @@ function createMultipleChoiceAnswerTable() {
      'REFERENCES Questions(QuestionID)' +
      'ON DELETE CASCADE' +
      ');');
+}
+
+function createTables() {
+   'use strict';
+
+   createPageTable();
+   createQuestionTable();
+   createCodingAnswerTable();
+   createMultipleChoiceAnswerTable();
 }
 
 module.exports = createTables;

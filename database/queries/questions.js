@@ -1,29 +1,22 @@
 var connection = require('../connection');
 
-function addQuestion(
-  pageID,
-  questionType,
-  questionName,
-  questionStatement,
-  hint1,
-  hint2,
-  hint3,
-  callback
-) {
-  'use strict';
-  var queryString =
-     'INSERT INTO Questions (PageID, QuestionType, QuestionName, ' +
-     'QuestionStatement, Hint1, Hint2, Hint3) VALUES(?, ?, ?, ?, ?, ?, ?)';
+function addQuestion(questionData, callback) {
+   'use strict';
+
+   var queryString =
+      'INSERT INTO Questions (PageID, QuestionType, QuestionName, ' +
+      'QuestionStatement, Hint1, Hint2, Hint3) VALUES(?, ?, ?, ?, ?, ?, ?)';
 
    connection.query(queryString, [
-pageID,
- questionType,
- questionName,
- questionStatement,
- hint1,
- hint2,
- hint3
-], function(err, results) {
+questionData.pageID,
+ questionData.questionType,
+     questionData.questionName,
+ questionData.questionStatement,
+ questionData.questionHints[0],
+     questionData.questionHints[1],
+questionData.questionHints[2]
+],
+     function(err, results) {
       if (err) {
          console.log('Error occurred: ' + err.code);
 
@@ -35,10 +28,11 @@ pageID,
 }
 
 function getQuestionType(questionID, callback) {
-  'use strict';
-  var queryString = 'SELECT Questions.QuestionType as QuestionType ' +
-     'FROM Questions ' +
-     'WHERE Questions.QuestionID=?';
+   'use strict';
+
+   var queryString = 'SELECT Questions.QuestionType as QuestionType ' +
+      'FROM Questions ' +
+      'WHERE Questions.QuestionID=?';
 
    connection.query(queryString, [questionID], function(err, results) {
       if (err) {
@@ -49,33 +43,24 @@ function getQuestionType(questionID, callback) {
    });
 }
 
-function updateQuestion(
-  questionID,
-  pageID,
-  questionType,
-  questionName,
-  questionStatement,
-  hint1,
-  hint2,
-  hint3,
-  callback
-) {
-  'use strict';
-  var queryString = 'UPDATE Questions ' +
-     'SET PageID=?, QuestionType=?, QuestionName=?, QuestionStatement=?, ' +
-     'Hint1=?, Hint2=?, Hint3=?' +
-     'WHERE QuestionID=?;';
+function updateQuestion(questionData, callback) {
+   'use strict';
+
+   var queryString = 'UPDATE Questions ' +
+      'SET PageID=?, QuestionType=?, QuestionName=?, QuestionStatement=?, ' +
+      'Hint1=?, Hint2=?, Hint3=?' +
+      'WHERE QuestionID=?;';
 
    connection.query(queryString, [
-pageID,
- questionType,
- questionName,
- questionStatement,
- hint1,
- hint2,
- hint3,
- questionID
-], function(err, results) {
+questionData.pageID,
+ questionData.questionType,
+     questionData.questionName,
+ questionData.questionStatement,
+     questionData.questionHints[0],
+ questionData.questionHints[1],
+ questionData.questionHints[2],
+ questionData.questionID
+], function(err) {
       if (err) {
          console.log('Error occurred: ' + err.code);
       } else {
@@ -85,12 +70,13 @@ pageID,
 }
 
 function updateQuestionPage(pageID, questionID) {
-  'use strict';
-  var queryString = 'UPDATE Questions ' +
-     'SET PageID=? ' +
-     'WHERE QuestionID=?;';
+   'use strict';
 
-   connection.query(queryString, [pageID, questionID], function(err, results) {
+   var queryString = 'UPDATE Questions ' +
+      'SET PageID=? ' +
+      'WHERE QuestionID=?;';
+
+   connection.query(queryString, [pageID, questionID], function(err) {
       if (err) {
          console.log('Error occurred: ' + err.code);
       }
@@ -98,11 +84,12 @@ function updateQuestionPage(pageID, questionID) {
 }
 
 function deleteQuestion(questionID) {
-  'use strict';
-  var queryString = 'DELETE FROM Questions ' +
-     'WHERE QuestionID=?;';
+   'use strict';
 
-   connection.query(queryString, [questionID], function(err, results) {
+   var queryString = 'DELETE FROM Questions ' +
+      'WHERE QuestionID=?;';
+
+   connection.query(queryString, [questionID], function(err) {
       if (err) {
          console.log('Error occurred: ' + err.code);
       }

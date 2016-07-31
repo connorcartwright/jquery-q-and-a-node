@@ -3,54 +3,39 @@ var qs = require('querystring');
 
 var database = require('./database/database');
 
-const PORT = 8080;
-
-var requestListener = function(req, res) {
-  'use strict';
-  var body = '';
-   var reqData = '';
-
-   req.on('data', function(chunk) {
-      body += chunk;
-   });
-   req.on('end', function() {
-      reqData = qs.parse(body);
-
-      switch(req.method) {
-      case 'GET':
-         handleGetRequest(req);
-      break;
-      case 'POST':
-         handlePostRequest(reqData, function(response) {
-            // To fix, would not accept vagrant.learn.jquery
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-            res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-            res.end(JSON.stringify(response));
-         });
-      break;
-   }
-   });
-};
+var PORT = 8080;
 
 function handleGetRequest(data) {
-  'use strict';
-  console.log('GET REQUEST');
+   'use strict';
+
+   data = data;
+   console.log('GET REQUEST');
 }
 
-function updateQuestion(questionData, oldQuestionType) {
-  'use strict';
-  database.questionQueries.updateQuestion(questionData.questionID, questionData.pageID,
-     questionData.questionType, questionData.questionName, questionData.questionStatement,
-     questionData.questionHints[0], questionData.questionHints[1], questionData.questionHints[2],
-     function() {
-      updateQuestionAnswers(questionData, oldQuestionType);
-   });
+function addMultipleChoiceAnswers(questionTypeArea, questionID) {
+   'use strict';
+
+   for(var i = 0; i < questionTypeArea.length; i++) {
+      var option = questionTypeArea[i];
+
+      database.answerQueries.addMultipleChoiceAnswer(questionID, option.text, option.correct);
+   }
+}
+
+function addCodingAnswers(questionTypeArea, questionID) {
+   'use strict';
+
+   for(var i = 0; i < questionTypeArea.length; i++) {
+      var inputOutput = questionTypeArea[i];
+
+      database.answerQueries.addCodingAnswer(questionID, inputOutput.input, inputOutput.output);
+   }
 }
 
 function updateQuestionAnswers(questionData, oldQuestionType) {
-  'use strict';
-  var questionID = questionData.questionID;
+   'use strict';
+
+   var questionID = questionData.questionID;
    var questionTypeArea = JSON.parse(questionData.questionTypeArea);
 
    if (oldQuestionType === 'Multiple Choice') {
@@ -64,27 +49,32 @@ function updateQuestionAnswers(questionData, oldQuestionType) {
    }
 }
 
-function addMultipleChoiceAnswers(questionTypeArea, questionID) {
-  'use strict';
-  for(var i = 0; i < questionTypeArea.length; i++) {
-      var option = questionTypeArea[i];
+function updateQuestion(questionData, oldQuestionType) {
+   'use strict';
 
-      database.answerQueries.addMultipleChoiceAnswer(questionID, option.text, option.correct);
-   }
+   database.questionQueries.updateQuestion(questionData, function() {
+      updateQuestionAnswers(questionData, oldQuestionType);
+   });
 }
 
-function addCodingAnswers(questionTypeArea, questionID) {
-  'use strict';
-  for(var i = 0; i < questionTypeArea.length; i++) {
-      var inputOutput = questionTypeArea[i];
+function loopQuestions(question, callback) {
+   'use strict';
 
-      database.answerQueries.addCodingAnswer(questionID, inputOutput.input, inputOutput.output);
+   if (question.QuestionType === 'Multiple Choice') {
+      database.answerQueries.getMultipleChoiceAnswers(question.QuestionID, function(answers) {
+         callback(answers);
+      });
+   } else {
+      database.answerQueries.getCodingAnswers(question.QuestionID, function(answers) {
+         callback(answers);
+      });
    }
 }
 
 function handlePostRequest(reqData, callback) {
-  'use strict';
-  switch(reqData.action) {
+   'use strict';
+
+   switch(reqData.action) {
    case 'addPage':
       database.pageQueries.addPage(reqData.id, reqData.title);
       var response = {
@@ -93,23 +83,13 @@ function handlePostRequest(reqData, callback) {
       };
 
       return callback(response);
-
-   break;
    case 'addQuestion':
       if (reqData.questionID) {
          database.questionQueries.getQuestionType(reqData.questionID, function(oldQuestionType) {
             updateQuestion(reqData, oldQuestionType);
          });
       } else {
-         database.questionQueries.addQuestion(
-           reqData.pageID,
-           reqData.questionType,
-           reqData.questionName,
-           reqData.questionStatement,
-           reqData.questionHints[0],
-           reqData.questionHints[1],
-           reqData.questionHints[2],
-           function(questionID) {
+         database.questionQueries.addQuestion(reqData, function(questionID) {
             if (reqData.questionType === 'Multiple Choice') {
                addMultipleChoiceAnswers(JSON.parse(reqData.questionTypeArea), questionID);
             } else {
@@ -118,7 +98,7 @@ function handlePostRequest(reqData, callback) {
          });
       }
 
-   break;
+      break;
    case 'getQuestionCount':
       database.pageQueries.pageCount(reqData.id, function(result) {
          var response = {
@@ -129,7 +109,7 @@ function handlePostRequest(reqData, callback) {
 
          return callback(response);
       });
-   break;
+      break;
    case 'getQuestionsForPage':
       database.pageQueries.getPageQuestions(reqData.id, function(questions) {
          var i = 0;
@@ -154,29 +134,46 @@ function handlePostRequest(reqData, callback) {
 
          loopQ(questions);
       });
-   break;
+      break;
 }
 }
 
-function loopQuestions(question, callback) {
-  'use strict';
-  if (question.QuestionType === 'Multiple Choice') {
-      database.answerQueries.getMultipleChoiceAnswers(question.QuestionID, function(answers) {
-         callback(answers);
-      });
-   } else {
-      database.answerQueries.getCodingAnswers(question.QuestionID, function(answers) {
-         callback(answers);
-      });
+var requestListener = function(req, res) {
+   'use strict';
+
+   var body = '';
+   var reqData = '';
+
+   req.on('data', function(chunk) {
+      body += chunk;
+   });
+   req.on('end', function() {
+      reqData = qs.parse(body);
+
+      switch(req.method) {
+      case 'GET':
+         handleGetRequest(req);
+         break;
+      case 'POST':
+         handlePostRequest(reqData, function(response) {
+            // To fix, would not accept vagrant.learn.jquery
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+            res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+            res.end(JSON.stringify(response));
+         });
+         break;
    }
-}
+   });
+};
 
 // Create server
 var server = http.createServer(requestListener);
 
 // Start server
 server.listen(PORT, function() {
-  'use strict';
-  console.log('Server listening on: http://localhost:%s', PORT);
+   'use strict';
+
+   console.log('Server listening on: http://localhost:%s', PORT);
    require('./database/database').createTables();
 });
