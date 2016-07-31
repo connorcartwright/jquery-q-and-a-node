@@ -80,14 +80,6 @@ function getMultipleChoiceAnswers(questionID, callback) {
    });
 }
 
-// Update coding answer
-
-// add mc answer
-
-// update mc answer
-
-// remove is done via delete cascade on the question itself
-
 module.exports = {
    addCodingAnswer: addCodingAnswer,
    removeCodingAnswers: removeCodingAnswers,
