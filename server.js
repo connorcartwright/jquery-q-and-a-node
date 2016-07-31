@@ -6,8 +6,9 @@ var database = require('./database/database');
 const PORT = 8080;
 
 var requestListener = function(req, res) {
-   var body = '';
-   var reqD = '';
+  'use strict';
+  var body = '';
+   var reqData = '';
 
    req.on('data', function(chunk) {
       body += chunk;
