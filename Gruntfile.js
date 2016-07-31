@@ -7,7 +7,7 @@ module.exports = function(grunt) {
    });
 
    var config = {
-      src: './',
+      src: 'database',
       dist: 'dist'
    };
 
@@ -51,7 +51,9 @@ module.exports = function(grunt) {
             fix: true
          },
          src: [
-             '<%= config.src %>/**/*.js'
+             '<%= config.src %>/**/*.js',
+             'Gruntfile.js',
+             'server.js'
          ]
       },
 
@@ -62,7 +64,8 @@ module.exports = function(grunt) {
          },
          src: [
              '<%= config.src %>/**/*.js',
-             'Gruntfile.js'
+             'Gruntfile.js',
+           'server.js'
          ]
       },
 
