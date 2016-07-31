@@ -1,4 +1,6 @@
 
+'use strict';
+
 var mysql = require('mysql');
 var db = require('./database-config');
 

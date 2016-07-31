@@ -1,7 +1,8 @@
 var connection = require('../connection');
 
 function createTables() {
-   createPageTable();
+  'use strict';
+  createPageTable();
    createQuestionTable();
    createCodingAnswerTable();
    createMultipleChoiceAnswerTable();
@@ -10,7 +11,8 @@ function createTables() {
 var questionQueries = require('./questions');
 
 function createPageTable() {
-   connection.query('CREATE TABLE IF NOT EXISTS Pages (' +
+  'use strict';
+  connection.query('CREATE TABLE IF NOT EXISTS Pages (' +
      'PageID MEDIUMINT NOT NULL,' +
      'PageTitle VARCHAR(100) NOT NULL,' +
      'PRIMARY KEY (PageID)' +
@@ -18,7 +20,8 @@ function createPageTable() {
 }
 
 function createQuestionTable() {
-   connection.query('CREATE TABLE IF NOT EXISTS Questions (' +
+  'use strict';
+  connection.query('CREATE TABLE IF NOT EXISTS Questions (' +
      'QuestionID MEDIUMINT NOT NULL AUTO_INCREMENT,' +
      'PageID MEDIUMINT NOT NULL,' +
      'QuestionType VARCHAR(20) NOT NULL,' +
@@ -35,7 +38,8 @@ function createQuestionTable() {
 }
 
 function createCodingAnswerTable() {
-   connection.query('CREATE TABLE IF NOT EXISTS CodingAnswers (' +
+  'use strict';
+  connection.query('CREATE TABLE IF NOT EXISTS CodingAnswers (' +
      'AnswerID MEDIUMINT NOT NULL AUTO_INCREMENT,' +
      'QuestionID MEDIUMINT NOT NULL,' +
      'Input TEXT NOT NULL,' +
@@ -48,7 +52,8 @@ function createCodingAnswerTable() {
 }
 
 function createMultipleChoiceAnswerTable() {
-   connection.query('CREATE TABLE IF NOT EXISTS MultipleChoiceAnswers (' +
+  'use strict';
+  connection.query('CREATE TABLE IF NOT EXISTS MultipleChoiceAnswers (' +
      'AnswerID MEDIUMINT NOT NULL AUTO_INCREMENT,' +
      'QuestionID MEDIUMINT NOT NULL,' +
      'OptionText VARCHAR(100) NOT NULL,' +

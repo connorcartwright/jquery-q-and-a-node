@@ -10,7 +10,8 @@ function addQuestion(
   hint3,
   callback
 ) {
-   var queryString =
+  'use strict';
+  var queryString =
      'INSERT INTO Questions (PageID, QuestionType, QuestionName, ' +
      'QuestionStatement, Hint1, Hint2, Hint3) VALUES(?, ?, ?, ?, ?, ?, ?)';
 
@@ -34,7 +35,8 @@ pageID,
 }
 
 function getQuestionType(questionID, callback) {
-   var queryString = 'SELECT Questions.QuestionType as QuestionType ' +
+  'use strict';
+  var queryString = 'SELECT Questions.QuestionType as QuestionType ' +
      'FROM Questions ' +
      'WHERE Questions.QuestionID=?';
 
@@ -58,7 +60,8 @@ function updateQuestion(
   hint3,
   callback
 ) {
-   var queryString = 'UPDATE Questions ' +
+  'use strict';
+  var queryString = 'UPDATE Questions ' +
      'SET PageID=?, QuestionType=?, QuestionName=?, QuestionStatement=?, ' +
      'Hint1=?, Hint2=?, Hint3=?' +
      'WHERE QuestionID=?;';
@@ -82,7 +85,8 @@ pageID,
 }
 
 function updateQuestionPage(pageID, questionID) {
-   var queryString = 'UPDATE Questions ' +
+  'use strict';
+  var queryString = 'UPDATE Questions ' +
      'SET PageID=? ' +
      'WHERE QuestionID=?;';
 
@@ -94,7 +98,8 @@ function updateQuestionPage(pageID, questionID) {
 }
 
 function deleteQuestion(questionID) {
-   var queryString = 'DELETE FROM Questions ' +
+  'use strict';
+  var queryString = 'DELETE FROM Questions ' +
      'WHERE QuestionID=?;';
 
    connection.query(queryString, [questionID], function(err, results) {

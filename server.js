@@ -34,11 +34,13 @@ var requestListener = function(req, res) {
 };
 
 function handleGetRequest(data) {
-   console.log('GET REQUEST');
+  'use strict';
+  console.log('GET REQUEST');
 }
 
 function updateQuestion(questionData, oldQuestionType) {
-   database.questionQueries.updateQuestion(questionData.questionID, questionData.pageID,
+  'use strict';
+  database.questionQueries.updateQuestion(questionData.questionID, questionData.pageID,
      questionData.questionType, questionData.questionName, questionData.questionStatement,
      questionData.questionHints[0], questionData.questionHints[1], questionData.questionHints[2],
      function() {
@@ -47,7 +49,8 @@ function updateQuestion(questionData, oldQuestionType) {
 }
 
 function updateQuestionAnswers(questionData, oldQuestionType) {
-   var questionID = questionData.questionID;
+  'use strict';
+  var questionID = questionData.questionID;
    var questionTypeArea = JSON.parse(questionData.questionTypeArea);
 
    if (oldQuestionType === 'Multiple Choice') {
@@ -62,7 +65,8 @@ function updateQuestionAnswers(questionData, oldQuestionType) {
 }
 
 function addMultipleChoiceAnswers(questionTypeArea, questionID) {
-   for(var i = 0; i < questionTypeArea.length; i++) {
+  'use strict';
+  for(var i = 0; i < questionTypeArea.length; i++) {
       var option = questionTypeArea[i];
 
       database.answerQueries.addMultipleChoiceAnswer(questionID, option.text, option.correct);
@@ -70,7 +74,8 @@ function addMultipleChoiceAnswers(questionTypeArea, questionID) {
 }
 
 function addCodingAnswers(questionTypeArea, questionID) {
-   for(var i = 0; i < questionTypeArea.length; i++) {
+  'use strict';
+  for(var i = 0; i < questionTypeArea.length; i++) {
       var inputOutput = questionTypeArea[i];
 
       database.answerQueries.addCodingAnswer(questionID, inputOutput.input, inputOutput.output);
@@ -78,7 +83,8 @@ function addCodingAnswers(questionTypeArea, questionID) {
 }
 
 function handlePostRequest(reqData, callback) {
-   switch(reqData.action) {
+  'use strict';
+  switch(reqData.action) {
    case 'addPage':
       database.pageQueries.addPage(reqData.id, reqData.title);
       var response = {
@@ -153,7 +159,8 @@ function handlePostRequest(reqData, callback) {
 }
 
 function loopQuestions(question, callback) {
-   if (question.QuestionType === 'Multiple Choice') {
+  'use strict';
+  if (question.QuestionType === 'Multiple Choice') {
       database.answerQueries.getMultipleChoiceAnswers(question.QuestionID, function(answers) {
          callback(answers);
       });
@@ -169,6 +176,7 @@ var server = http.createServer(requestListener);
 
 // Start server
 server.listen(PORT, function() {
-   console.log('Server listening on: http://localhost:%s', PORT);
+  'use strict';
+  console.log('Server listening on: http://localhost:%s', PORT);
    require('./database/database').createTables();
 });

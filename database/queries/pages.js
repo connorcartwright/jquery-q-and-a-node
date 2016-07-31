@@ -1,7 +1,8 @@
 var connection = require('../connection');
 
 function addPage(pageID, pageTitle) {
-   var queryString = 'INSERT IGNORE INTO Pages (PageID, PageTitle) VALUES(?, ?)';
+  'use strict';
+  var queryString = 'INSERT IGNORE INTO Pages (PageID, PageTitle) VALUES(?, ?)';
 
    connection.query(queryString, [pageID, pageTitle], function(err, results) {
       if (err) {
@@ -15,7 +16,8 @@ function addPage(pageID, pageTitle) {
 }
 
 function pageCount(pageID, callback) {
-   var queryString = 'SELECT COUNT(Pages.PageID) AS "PageCount" ' +
+  'use strict';
+  var queryString = 'SELECT COUNT(Pages.PageID) AS "PageCount" ' +
      'FROM Pages ' +
      'INNER JOIN Questions ' +
        'ON Pages.PageID=Questions.PageID ' +
@@ -33,7 +35,8 @@ function pageCount(pageID, callback) {
 }
 
 function getPageQuestions(pageID, callback) {
-   var queryString = 'SELECT Questions.QuestionID AS QuestionID, Questions.QuestionType AS QuestionType, ' +
+  'use strict';
+  var queryString = 'SELECT Questions.QuestionID AS QuestionID, Questions.QuestionType AS QuestionType, ' +
      'Questions.QuestionName AS QuestionName, Questions.QuestionStatement AS QuestionStatement, ' +
      'Questions.Hint1 AS Hint1, Questions.Hint2 AS Hint2, Questions.Hint3 AS Hint3 ' +
      'FROM Pages ' +

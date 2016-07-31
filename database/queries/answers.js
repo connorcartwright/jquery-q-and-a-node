@@ -1,7 +1,8 @@
 var connection = require('../connection');
 
 function addCodingAnswer(questionID, input, output) {
-   var queryString = 'INSERT INTO CodingAnswers (QuestionID, Input, Output) VALUES(?, ?, ?)';
+  'use strict';
+  var queryString = 'INSERT INTO CodingAnswers (QuestionID, Input, Output) VALUES(?, ?, ?)';
 
    connection.query(queryString, [questionID, input, output], function(err) {
       if (err) {
@@ -13,7 +14,8 @@ function addCodingAnswer(questionID, input, output) {
 }
 
 function removeCodingAnswers(questionID, callback) {
-   var queryString = 'DELETE FROM CodingAnswers WHERE QuestionID=?;';
+  'use strict';
+  var queryString = 'DELETE FROM CodingAnswers WHERE QuestionID=?;';
 
    connection.query(queryString, [questionID], function(err) {
       if (err) {
@@ -25,7 +27,8 @@ function removeCodingAnswers(questionID, callback) {
 }
 
 function getCodingAnswers(questionID, callback) {
-   var queryString = 'SELECT Input, Output ' +
+  'use strict';
+  var queryString = 'SELECT Input, Output ' +
      'FROM CodingAnswers WHERE QuestionID=?';
 
    connection.query(queryString, [questionID], function(err, result) {
@@ -40,7 +43,8 @@ function getCodingAnswers(questionID, callback) {
 }
 
 function addMultipleChoiceAnswer(questionID, optionText, correct) {
-   var queryString = 'INSERT INTO MultipleChoiceAnswers (QuestionID, OptionText, Correct) VALUES(?, ?, ?)';
+  'use strict';
+  var queryString = 'INSERT INTO MultipleChoiceAnswers (QuestionID, OptionText, Correct) VALUES(?, ?, ?)';
 
    connection.query(queryString, [questionID, optionText, correct], function(err) {
       if (err) {
@@ -54,7 +58,8 @@ function addMultipleChoiceAnswer(questionID, optionText, correct) {
 }
 
 function removeMultipleChoiceAnswers(questionID, callback) {
-   var queryString = 'DELETE FROM MultipleChoiceAnswers WHERE QuestionID=?;';
+  'use strict';
+  var queryString = 'DELETE FROM MultipleChoiceAnswers WHERE QuestionID=?;';
 
    connection.query(queryString, [questionID], function(err) {
       if (err) {
@@ -66,7 +71,8 @@ function removeMultipleChoiceAnswers(questionID, callback) {
 }
 
 function getMultipleChoiceAnswers(questionID, callback) {
-   var queryString = 'SELECT OptionText, Correct ' +
+  'use strict';
+  var queryString = 'SELECT OptionText, Correct ' +
      'FROM MultipleChoiceAnswers WHERE QuestionID=?';
 
    connection.query(queryString, [questionID], function(err, result) {
