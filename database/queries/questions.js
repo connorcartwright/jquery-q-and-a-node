@@ -5,19 +5,21 @@ function addQuestion(questionData, callback) {
 
    var queryString =
       'INSERT INTO Questions (PageID, QuestionType, QuestionName, ' +
-      'QuestionStatement, Hint1, Hint2, Hint3) VALUES(?, ?, ?, ?, ?, ?, ?)';
+      'QuestionStatement, QuestionCode, Hint1, Hint2, Hint3) VALUES(?, ?, ?, ?, ?, ?, ?, ?)';
 
    connection.query(queryString, [
 questionData.pageID,
  questionData.questionType,
      questionData.questionName,
  questionData.questionStatement,
- questionData.questionHints[0],
+       questionData.questionCode,
+       questionData.questionHints[0],
      questionData.questionHints[1],
 questionData.questionHints[2]
 ],
      function(err, results) {
       if (err) {
+         console.log('right here bbe!');
          console.log('Error occurred: ' + err.code);
 
          return '';
@@ -48,7 +50,7 @@ function updateQuestion(questionData, callback) {
 
    var queryString = 'UPDATE Questions ' +
       'SET PageID=?, QuestionType=?, QuestionName=?, QuestionStatement=?, ' +
-      'Hint1=?, Hint2=?, Hint3=?' +
+      'QuestionCode=?, Hint1=?, Hint2=?, Hint3=?' +
       'WHERE QuestionID=?;';
 
    connection.query(queryString, [
@@ -56,6 +58,7 @@ questionData.pageID,
  questionData.questionType,
      questionData.questionName,
  questionData.questionStatement,
+     questionData.questionCode,
      questionData.questionHints[0],
  questionData.questionHints[1],
  questionData.questionHints[2],

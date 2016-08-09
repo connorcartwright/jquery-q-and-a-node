@@ -19,6 +19,7 @@ function createQuestionTable() {
      'QuestionType VARCHAR(20) NOT NULL,' +
      'QuestionName VARCHAR(100) NOT NULL,' +
      'QuestionStatement TEXT NOT NULL,' +
+     'QuestionCode TEXT,' +
      'Hint1 TEXT NOT NULL,' +
      'Hint2 TEXT NOT NULL,' +
      'Hint3 TEXT NOT NULL,' +
