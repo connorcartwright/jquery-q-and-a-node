@@ -41,7 +41,7 @@ function getPageQuestions(pageID, callback) {
 
    var queryString = 'SELECT Questions.QuestionID AS QuestionID, Questions.QuestionType AS QuestionType, ' +
       'Questions.QuestionName AS QuestionName, Questions.QuestionStatement AS QuestionStatement, ' +
-      'Questions.Hint1 AS Hint1, Questions.Hint2 AS Hint2, Questions.Hint3 AS Hint3 ' +
+      'Questions.QuestionCode AS QuestionCode, Questions.Hint1 AS Hint1, Questions.Hint2 AS Hint2, Questions.Hint3 AS Hint3 ' +
       'FROM Pages ' +
       'INNER JOIN Questions ' +
       'ON Pages.PageID=Questions.PageID ' +
