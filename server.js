@@ -18,8 +18,16 @@ function addMultipleChoiceAnswers(questionTypeArea, questionID) {
    for(var i = 0; i < questionTypeArea.length; i++) {
       var option = questionTypeArea[i];
 
-      database.answerQueries.addMultipleChoiceAnswer(questionID, option.text, option.correct);
+      database.answerQueries.addMultipleChoiceAnswer(questionID, option.optionText, option.correct);
    }
+
+   var response = {
+      status: 200,
+      questionID: questionID,
+      success: 'Question Added Successfully'
+   };
+
+   return response;
 }
 
 function addCodingAnswers(questionTypeArea, questionID) {
@@ -30,13 +38,21 @@ function addCodingAnswers(questionTypeArea, questionID) {
 
       database.answerQueries.addCodingAnswer(questionID, inputOutput.input, inputOutput.output);
    }
+
+   var response = {
+      status: 200,
+      questionID: questionID,
+      success: 'Question Added Successfully'
+   };
+
+   return response;
 }
 
 function updateQuestionAnswers(questionData, oldQuestionType) {
    'use strict';
 
    var questionID = questionData.questionID;
-   var questionTypeArea = JSON.parse(questionData.questionTypeArea);
+   var questionTypeArea = JSON.parse(questionData.answers);
 
    if (oldQuestionType === 'Multiple Choice') {
       database.answerQueries.removeMultipleChoiceAnswers(questionID, function() {
@@ -55,17 +71,24 @@ function updateQuestion(questionData, oldQuestionType) {
    database.questionQueries.updateQuestion(questionData, function() {
       updateQuestionAnswers(questionData, oldQuestionType);
    });
+
+   var response = {
+      status: 200,
+      success: 'Question Updated Successfully'
+   };
+
+   return response;
 }
 
 function loopQuestions(question, callback) {
    'use strict';
 
-   if (question.QuestionType === 'Multiple Choice') {
-      database.answerQueries.getMultipleChoiceAnswers(question.QuestionID, function(answers) {
+   if (question.questionType === 'Multiple Choice') {
+      database.answerQueries.getMultipleChoiceAnswers(question.questionID, function(answers) {
          callback(answers);
       });
    } else {
-      database.answerQueries.getCodingAnswers(question.QuestionID, function(answers) {
+      database.answerQueries.getCodingAnswers(question.questionID, function(answers) {
          callback(answers);
       });
    }
@@ -86,14 +109,14 @@ function handlePostRequest(reqData, callback) {
    case 'addQuestion':
       if (reqData.questionID) {
          database.questionQueries.getQuestionType(reqData.questionID, function(oldQuestionType) {
-            updateQuestion(reqData, oldQuestionType);
+            return callback(updateQuestion(reqData, oldQuestionType));
          });
       } else {
          database.questionQueries.addQuestion(reqData, function(questionID) {
             if (reqData.questionType === 'Multiple Choice') {
-               addMultipleChoiceAnswers(JSON.parse(reqData.questionTypeArea), questionID);
+               return callback(addMultipleChoiceAnswers(JSON.parse(reqData.answers), questionID));
             } else {
-               addCodingAnswers(JSON.parse(reqData.questionTypeArea), questionID);
+               return callback(addCodingAnswers(JSON.parse(reqData.answers), questionID));
             }
          });
       }
@@ -115,7 +138,9 @@ function handlePostRequest(reqData, callback) {
          var i = 0;
          var loopQ = function(questions) {
             loopQuestions(questions[i], function(answers) {
-               questions[i].Answers = answers;
+               console.log('answers: ');
+               console.log(answers);
+               questions[i].answers = answers;
 
                if (i < questions.length - 1) {
                   i++;

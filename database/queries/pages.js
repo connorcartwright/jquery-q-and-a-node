@@ -39,9 +39,9 @@ function pageCount(pageID, callback) {
 function getPageQuestions(pageID, callback) {
    'use strict';
 
-   var queryString = 'SELECT Questions.QuestionID AS QuestionID, Questions.QuestionType AS QuestionType, ' +
-      'Questions.QuestionName AS QuestionName, Questions.QuestionStatement AS QuestionStatement, ' +
-      'Questions.QuestionCode AS QuestionCode, Questions.Hint1 AS Hint1, Questions.Hint2 AS Hint2, Questions.Hint3 AS Hint3 ' +
+   var queryString = 'SELECT Questions.QuestionID AS questionID, Questions.QuestionType AS questionType, ' +
+      'Questions.QuestionName AS questionName, Questions.QuestionStatement AS questionStatement, ' +
+      'Questions.QuestionCode AS questionCode, Questions.Hint1 AS hint1, Questions.Hint2 AS hint2, Questions.Hint3 AS hint3 ' +
       'FROM Pages ' +
       'INNER JOIN Questions ' +
       'ON Pages.PageID=Questions.PageID ' +

@@ -31,7 +31,7 @@ function removeCodingAnswers(questionID, callback) {
 function getCodingAnswers(questionID, callback) {
    'use strict';
 
-   var queryString = 'SELECT Input, Output ' +
+   var queryString = 'SELECT Input AS input, Output AS output ' +
       'FROM CodingAnswers WHERE QuestionID=?';
 
    connection.query(queryString, [questionID], function(err, result) {
@@ -78,7 +78,7 @@ function removeMultipleChoiceAnswers(questionID, callback) {
 function getMultipleChoiceAnswers(questionID, callback) {
    'use strict';
 
-   var queryString = 'SELECT OptionText, Correct ' +
+   var queryString = 'SELECT OptionText AS optionText, Correct AS correct ' +
       'FROM MultipleChoiceAnswers WHERE QuestionID=?';
 
    connection.query(queryString, [questionID], function(err, result) {
