@@ -5,10 +5,4 @@ module.exports = {
    pageQueries: require('./queries/pages'),
    questionQueries: require('./queries/questions'),
    answerQueries: require('./queries/answers')
-
-   // Queries: {
-   // questionQueries
-   // pageQueries
-   // }
-   // addQuestion: require('./queries/add-question')
 };

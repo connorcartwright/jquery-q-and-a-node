@@ -23,6 +23,7 @@ function createQuestionTable() {
      'Hint1 TEXT NOT NULL,' +
      'Hint2 TEXT NOT NULL,' +
      'Hint3 TEXT NOT NULL,' +
+     'EmbedURL VARCHAR(200),' +
      'PRIMARY KEY (QuestionID),' +
      'FOREIGN KEY (PageID)' +
      'REFERENCES Pages(PageID)' +

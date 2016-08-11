@@ -7,7 +7,7 @@ module.exports = function(grunt) {
    });
 
    var config = {
-      src: 'database',
+      src: 'src',
       dist: 'dist'
    };
 
@@ -26,24 +26,6 @@ module.exports = function(grunt) {
             }
          }
       },
-
-      // Sass: {
-      //     dist: {
-      //         files: {
-      //             'css/style.css' : 'css/style.scss'
-      //         }
-      //     }
-      // },
-      //
-      // Scsslint: {
-      //     allFiles: [
-      //         'css/**/*.scss',
-      //     ],
-      //     options: {
-      //         config: './config/.scss-lint.yml',
-      //         colorizeOutput: true
-      //     },
-      // },
 
       jscs: {
          options: {
