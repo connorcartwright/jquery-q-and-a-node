@@ -32,7 +32,7 @@ function updateQuestion(database, questionData, oldQuestionType) {
       success: 'Question Updated Successfully'
    };
 
-   createQuestionPage(questionData.questionID);
+   createQuestionPage(questionData);
 
    return response;
 }
