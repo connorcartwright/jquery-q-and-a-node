@@ -1,6 +1,7 @@
 
 var addMultipleChoiceAnswers = require('../../helpers/add-multiple-choice-answers');
 var addCodingAnswers = require('../../helpers/add-coding-answers');
+var createQuestionPage = require('../../helpers/create-question-page');
 
 function updateQuestionAnswers(database, questionData, oldQuestionType) {
    'use strict';
@@ -30,6 +31,8 @@ function updateQuestion(database, questionData, oldQuestionType) {
       status: 200,
       success: 'Question Updated Successfully'
    };
+
+   createQuestionPage(questionData.questionID);
 
    return response;
 }

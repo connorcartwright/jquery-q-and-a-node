@@ -13,17 +13,15 @@ function getAnswers(database, question, callback) {
    }
 }
 
-function loopAnswers(database, questions, callback) {
+function loopAnswers(i, database, questions, callback) {
    'use strict';
-
-   var i = 0;
 
    getAnswers(database, questions[i], function(answers) {
       questions[i].answers = answers;
 
       if (i < questions.length - 1) {
          i++;
-         loopAnswers(database, questions);
+         loopAnswers(i, database, questions, callback);
       } else {
          var response = {
             status: 200,
@@ -40,7 +38,7 @@ function getQuestionsForPage(database, reqData, callback) {
    'use strict';
 
    database.pageQueries.getPageQuestions(reqData.id, function(questions) {
-      loopAnswers(database, questions, callback);
+      loopAnswers(0, database, questions, callback);
    });
 }
 

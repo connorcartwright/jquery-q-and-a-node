@@ -3,23 +3,11 @@ var qs = require('querystring');
 var fs = require('fs');
 var handleGetRequest = require('./src/requests/get');
 var handlePostRequest = require('./src/requests/post');
+var questionPageDirectory = './questions';
 
-var dir = './questions';
-
-if (!fs.existsSync(dir)) {
-   fs.mkdirSync(dir);
+if (!fs.existsSync(questionPageDirectory)) {
+   fs.mkdirSync(questionPageDirectory);
 }
-
-//
-// Fs.writeFile('./tmp/test.txt', 'Hey there!', function(err) {
-//    'use strict';
-//
-//    If (err) {
-//       return console.log(err);
-//    }
-//
-//    Console.log('The file was saved!');
-// });
 
 var PORT = 8080;
 
