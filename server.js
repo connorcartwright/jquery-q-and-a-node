@@ -1,52 +1,58 @@
-var http = require('http');
-var qs = require('querystring');
+var express = require('express');
+var bodyParser = require('body-parser');
+var app = express();
 var fs = require('fs');
-var handleGetRequest = require('./src/requests/get');
+
 var handlePostRequest = require('./src/requests/post');
+
+app.use(bodyParser.urlencoded({
+   extended: false
+}));
+
+app.use(bodyParser.json());
+
 var questionPageDirectory = './questions';
 
 if (!fs.existsSync(questionPageDirectory)) {
    fs.mkdirSync(questionPageDirectory);
 }
 
-var PORT = 8080;
+var PORT = process.env.PORT || 8080;
+
+console.log('Server listening at port ' + PORT);
+
+app.listen(PORT);
+
+app.get('/questions/', function(req, res) {
+   'use strict';
+
+   var pageID = req.query.pageID;
+   var questionID = req.query.questionID;
+
+   console.log('GET REQUEST');
+   console.log(req.url);
+   console.log(req.query.pageID);
+   console.log(req.query.questionID);
+   console.log('GET REQUEST');
+
+   res.sendFile(__dirname + '/questions/page-' + pageID + '/' + questionID + '.html');
+});
 
 var requestListener = function(req, res) {
    'use strict';
 
-   var body = '';
-   var reqData = '';
-
-   req.on('data', function(chunk) {
-      body += chunk;
-   });
-   req.on('end', function() {
-      reqData = qs.parse(body);
-
-      switch(req.method) {
-      case 'GET':
-         handleGetRequest(req);
-         break;
-      case 'POST':
-         handlePostRequest(reqData, function(response) {
-            // To fix, would not accept vagrant.learn.jquery
-            res.setHeader('Access-Control-Allow-Origin', '*');
-            res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-            res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-            res.end(JSON.stringify(response));
-         });
-         break;
-   }
+   handlePostRequest(req.body, function(response) {
+      // To fix, would not accept vagrant.learn.jquery
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+      res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+      res.end(JSON.stringify(response));
    });
 };
 
-// Create server
-var server = http.createServer(requestListener);
-
-// Start server
-server.listen(PORT, function() {
+app.post('/', function(req, res) {
    'use strict';
 
-   console.log('Server listening on: http://localhost:%s', PORT);
-   require('./src/database/database').createTables();
+   requestListener(req, res);
 });
+

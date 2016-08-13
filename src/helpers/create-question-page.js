@@ -1,12 +1,21 @@
 var fs = require('fs');
 var baseURL = './questions';
 
+// Function createTypeArea(questionType, answers) {
+//
+// }
+
 function buildQuestionPage(data) {
    'use strict';
 
-   data = 'hello';
+   var body = '<body><h1>' + data.questionType + ' Question</h1><h2>' + data.questionName +
+     '</h2><p>' + data.questionStatement + '</p></body>';
 
-   return 'File Created!';
+   var html = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>' + data.questionName + '</title>' +
+     '<link rel="stylesheet" href="css/style.css"><script src="script.js"></script></head>' +
+     body + '</html>';
+
+   return html;
 }
 
 function writeQuestionDetails(data, url) {
