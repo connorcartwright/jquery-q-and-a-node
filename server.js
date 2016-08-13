@@ -11,6 +11,8 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json());
 
+app.use('/', express.static(__dirname + '/'));
+
 var questionPageDirectory = './questions';
 
 if (!fs.existsSync(questionPageDirectory)) {
@@ -22,21 +24,6 @@ var PORT = process.env.PORT || 8080;
 console.log('Server listening at port ' + PORT);
 
 app.listen(PORT);
-
-app.get('/questions/', function(req, res) {
-   'use strict';
-
-   var pageID = req.query.pageID;
-   var questionID = req.query.questionID;
-
-   console.log('GET REQUEST');
-   console.log(req.url);
-   console.log(req.query.pageID);
-   console.log(req.query.questionID);
-   console.log('GET REQUEST');
-
-   res.sendFile(__dirname + '/questions/page-' + pageID + '/' + questionID + '.html');
-});
 
 var requestListener = function(req, res) {
    'use strict';
