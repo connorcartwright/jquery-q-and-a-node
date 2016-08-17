@@ -1,0 +1,236 @@
+$orange: #f0af0b;
+$fern: #5cb85c;
+$mint-green: #e7ffe1;
+$green: #66ffab;
+$light: #ededed;
+$light-grey: #d1d1d1;
+$parsley: #1d621d;
+$monokai-background: #272822;
+$monokai-light: #373737;
+$monokai-border: #555;
+$titanium: #666;
+$light-border: #dcdcdc;
+$code: #a6e22a;
+$cobalt: #3498db;
+
+.qa-question {
+  height: 96%;
+  margin: 2%;
+  width: 96%;
+
+  .qa-question-header {
+    font-size: 32px;
+    margin-bottom: 14px;
+    margin-top: 16px;
+    text-decoration: underline;
+  }
+
+  .qa-question-name {
+    font-size: 24px;
+    margin-bottom: 12px;
+    margin-top: 4px;
+  }
+
+  .qa-question-content {
+
+    margin: 10px;
+    width: 640px;
+
+    .qa-question-statement {
+      font-size: 14px;
+      margin: 0 0 14px;
+    }
+  }
+
+  .submit-question {
+    float: right;
+    margin: 14px 10px;
+  }
+
+}
+
+.qa-question-type-area {
+
+  margin: 14px 0;
+
+  &.multiple-choice {
+    .multiple-choice-option {
+      height: 28px;
+      margin: 4px 10px;
+      position: relative;
+
+      .mc-option-text {
+        background: $light;
+        border: 1px solid $light-border;
+        border-radius: 4px 0 0 4px;
+        cursor: default;
+        display: inline-block;
+        height: 28px;
+        line-height: 28px;
+        margin: 0 0 0 10px;
+        width: 460px;
+
+        &.correct {
+          background-color: $mint-green;
+          color: $parsley;
+        }
+
+        span {
+          margin: 0 10px;
+        }
+      }
+
+      .mc-option {
+        background: $light;
+        border: 1px solid $light-border;
+        border-left: 0;
+        border-radius: 0 4px 4px 0;
+        display: inline-block;
+        height: 28px;
+        padding: 4px;
+        vertical-align: top;
+        width: 28px;
+
+        &.correct {
+          background-color: $mint-green;
+          color: $parsley;
+        }
+      }
+
+    }
+   }
+
+  &.coding {
+
+    .qa-code-padding {
+      background-color: $monokai-background;
+      border-radius: 5px 5px 0 0;
+      height: 14px;
+      width: 640px;
+    }
+
+    .qa-coding {
+      height: 300px;
+      width: 640px;
+    }
+
+    .qa-coding-tests {
+      background-color: $monokai-background;
+      border-radius: 0 0 5px 5px;
+      border-top: 1px solid $monokai-border;
+      height: 266px;
+      width: 640px;
+
+      .tests-title {
+        background-color: $monokai-light;
+        color: $light-grey;
+        height: 28px;
+        line-height: 28px;
+        text-align: center;
+        width: 80px;
+      }
+
+      .tests {
+        background-color: $monokai-light;
+        height: 100px;
+        padding: 12px 0;
+        position: relative;
+        width: 100%;
+
+        .test {
+          background-color: $titanium;
+          border-radius: 4px;
+          color: $light;
+          cursor: pointer;
+          line-height: 28px;
+          margin: 0 2% 4px;
+          min-height: 28px;
+          width: 96%;
+
+          .glyphicon {
+            margin-left: 14px;
+          }
+
+          .test-name {
+            margin-left: 6px;
+          }
+
+          .test-details {
+            margin: 0 20px;
+
+            .input,
+            .output,
+            .expected-output {
+              display: block;
+              font-size: 14px;
+              min-height: 20px;
+
+              span {
+                color: $code;
+                font-size: 12px;
+              }
+            }
+          }
+
+          &.open {
+            height: 146px;
+          }
+
+          &.closed {
+            .input,
+            .output,
+            .expected-output {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.qa-hints-area {
+  margin: 14px 0;
+
+  &.closed {
+    .hints {
+      display: none;
+    }
+  }
+
+  .hint-trigger {
+    color: $cobalt;
+    cursor: pointer;
+    display: block;
+
+    span {
+      font-style: italic;
+    }
+  }
+
+  .js-hint {
+    border-radius: 0;
+    height: 28px;
+    padding: 2px;
+    width: 28px;
+
+    &.js-hint-active {
+      width: 60px;
+    }
+
+    &:first-of-type {
+      border-radius: 4px 0 0 4px;
+      border-right: 0;
+    }
+
+    &:last-of-type {
+      border-left: 0;
+      border-radius: 0 4px 4px 0;
+    }
+  }
+
+  .qa-hint-text {
+    margin: 8px 0;
+  }
+
+}

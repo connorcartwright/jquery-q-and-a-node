@@ -1,0 +1,53 @@
+
+<div class="container">
+    <div class="qa-question">
+        <h1 class="qa-question-header">Question Type</h1>
+        <h2 class="qa-question-name">Question Name</h2>
+        <div class="qa-question-content">
+            <p class="qa-question-statement">Question Statement</p>
+            <div class="qa-hints-area closed">
+                <span class="hint-trigger js-hint-trigger">Need a <span>hint</span>?</span>
+                <div class="hints">
+                    <button type="button" class="btn btn-default qa-hint js-hint js-hint-1 js-hint-active" data-hint="1">
+                        <span>Hint 1</span>
+                    </button>
+                    <button type="button" class="btn btn-default qa-hint js-hint js-hint-2" data-hint="2">
+                        <span>2</span>
+                    </button>
+                    <button type="button" class="btn btn-default qa-hint js-hint js-hint-3" data-hint="3">
+                        <span>3</span>
+                    </button>
+                    <p class="qa-hint-text">Hint Text</p>
+                </div>
+                <button class="btn btn-success submit-question js-submit-question">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="qa-question-type-area coding">
+    <div class="qa-code-padding"></div>
+    <div id="qa-code-editor" class="qa-coding" data-code="-1">
+    </div>
+    <div class="qa-coding-tests">
+        <div class="tests-title">TESTS</div>
+        <div class="tests">
+            <div class="test closed">
+                <span class="glyphicon glyphicon-arrow-down"></span><span class="test-name">Test -1</span>
+                <div class="test-details">
+                    <div class="input">Input: <span>-1</span></div>
+                    <div class="output">Output: <span>-</span></div>
+                    <div class="expected-output">Expected Output: <span>-1</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="qa-question-type-area multiple-choice">
+    <div class="multiple-choice-option">
+        <div class="mc-option-text"><span>Option text</span></div>
+        <button type="button" class="btn btn-default mc-option js-mc-option"><span class="glyphicon glyphicon-ok"></span></button>
+    </div>
+</div>
+

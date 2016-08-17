@@ -1,0 +1,142 @@
+.qa-question {
+  height: 96%;
+  margin: 2%;
+  width: 96%; }
+  .qa-question .qa-question-header {
+    font-size: 32px;
+    margin-bottom: 14px;
+    margin-top: 16px;
+    text-decoration: underline; }
+  .qa-question .qa-question-name {
+    font-size: 24px;
+    margin-bottom: 12px;
+    margin-top: 4px; }
+  .qa-question .qa-question-content {
+    margin: 10px;
+    width: 640px; }
+    .qa-question .qa-question-content .qa-question-statement {
+      font-size: 14px;
+      margin: 0 0 14px; }
+  .qa-question .submit-question {
+    float: right;
+    margin: 14px 10px; }
+
+.qa-question-type-area {
+  margin: 14px 0; }
+  .qa-question-type-area.multiple-choice .multiple-choice-option {
+    height: 28px;
+    margin: 4px 10px;
+    position: relative; }
+    .qa-question-type-area.multiple-choice .multiple-choice-option .mc-option-text {
+      background: #ededed;
+      border: 1px solid #dcdcdc;
+      border-radius: 4px 0 0 4px;
+      cursor: default;
+      display: inline-block;
+      height: 28px;
+      line-height: 28px;
+      margin: 0 0 0 10px;
+      width: 460px; }
+      .qa-question-type-area.multiple-choice .multiple-choice-option .mc-option-text.correct {
+        background-color: #e7ffe1;
+        color: #1d621d; }
+      .qa-question-type-area.multiple-choice .multiple-choice-option .mc-option-text span {
+        margin: 0 10px; }
+    .qa-question-type-area.multiple-choice .multiple-choice-option .mc-option {
+      background: #ededed;
+      border: 1px solid #dcdcdc;
+      border-left: 0;
+      border-radius: 0 4px 4px 0;
+      display: inline-block;
+      height: 28px;
+      padding: 4px;
+      vertical-align: top;
+      width: 28px; }
+      .qa-question-type-area.multiple-choice .multiple-choice-option .mc-option.correct {
+        background-color: #e7ffe1;
+        color: #1d621d; }
+  .qa-question-type-area.coding .qa-code-padding {
+    background-color: #272822;
+    border-radius: 5px 5px 0 0;
+    height: 14px;
+    width: 640px; }
+  .qa-question-type-area.coding .qa-coding {
+    height: 300px;
+    width: 640px; }
+  .qa-question-type-area.coding .qa-coding-tests {
+    background-color: #272822;
+    border-radius: 0 0 5px 5px;
+    border-top: 1px solid #555;
+    height: 266px;
+    width: 640px; }
+    .qa-question-type-area.coding .qa-coding-tests .tests-title {
+      background-color: #373737;
+      color: #d1d1d1;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      width: 80px; }
+    .qa-question-type-area.coding .qa-coding-tests .tests {
+      background-color: #373737;
+      height: 100px;
+      padding: 12px 0;
+      position: relative;
+      width: 100%; }
+      .qa-question-type-area.coding .qa-coding-tests .tests .test {
+        background-color: #666;
+        border-radius: 4px;
+        color: #ededed;
+        cursor: pointer;
+        line-height: 28px;
+        margin: 0 2% 4px;
+        min-height: 28px;
+        width: 96%; }
+        .qa-question-type-area.coding .qa-coding-tests .tests .test .glyphicon {
+          margin-left: 14px; }
+        .qa-question-type-area.coding .qa-coding-tests .tests .test .test-name {
+          margin-left: 6px; }
+        .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details {
+          margin: 0 20px; }
+          .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .input,
+          .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .output,
+          .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .expected-output {
+            display: block;
+            font-size: 14px;
+            min-height: 20px; }
+            .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .input span,
+            .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .output span,
+            .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .expected-output span {
+              color: #a6e22a;
+              font-size: 12px; }
+        .qa-question-type-area.coding .qa-coding-tests .tests .test.open {
+          height: 146px; }
+        .qa-question-type-area.coding .qa-coding-tests .tests .test.closed .input,
+        .qa-question-type-area.coding .qa-coding-tests .tests .test.closed .output,
+        .qa-question-type-area.coding .qa-coding-tests .tests .test.closed .expected-output {
+          display: none; }
+
+.qa-hints-area {
+  margin: 14px 0; }
+  .qa-hints-area.closed .hints {
+    display: none; }
+  .qa-hints-area .hint-trigger {
+    color: #3498db;
+    cursor: pointer;
+    display: block; }
+    .qa-hints-area .hint-trigger span {
+      font-style: italic; }
+  .qa-hints-area .js-hint {
+    border-radius: 0;
+    height: 28px;
+    padding: 2px;
+    width: 28px; }
+    .qa-hints-area .js-hint.js-hint-active {
+      width: 60px; }
+    .qa-hints-area .js-hint:first-of-type {
+      border-radius: 4px 0 0 4px;
+      border-right: 0; }
+    .qa-hints-area .js-hint:last-of-type {
+      border-left: 0;
+      border-radius: 0 4px 4px 0; }
+  .qa-hints-area .qa-hint-text {
+    margin: 8px 0; }

@@ -27,6 +27,24 @@ module.exports = function(grunt) {
          }
       },
 
+      sass: {
+         dist: {
+            files: {
+               'questions/css/style.css': 'questions/css/style.scss'
+            }
+         }
+      },
+
+      scsslint: {
+         allFiles: [
+           'questions/css/**/*.scss'
+         ],
+         options: {
+            config: './config/.scss-lint.yml',
+            colorizeOutput: true
+         }
+      },
+
       jscs: {
          options: {
             config: './config/.jscsrc',
@@ -53,17 +71,18 @@ module.exports = function(grunt) {
 
       watch: {
          js: {
-            files: [
-'<%= config.src %>/**/*.js',
-               'Gruntfile.js',
-               'server.js'
-            ],
-            tasks: ['concurrent:lint']
+            files: ['<%= config.src %>/**/*.js', 'Gruntfile.js', 'server.js'],
+            tasks: ['jshint', 'jscs']
+         },
+         css: {
+            files: ['questions/css/**/*.scss'],
+            tasks: ['scsslint', 'sass']
          }
       },
 
       concurrent: {
-         lint: ['jshint', 'jscs']
+         lint: ['jshint', 'jscs', 'scsslint'],
+         combine: ['sass']
       }
    });
 
