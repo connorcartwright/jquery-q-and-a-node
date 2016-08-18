@@ -45,21 +45,14 @@ function createCodingArea(answers, $) {
 
    $('.qa-question-type-area.coding').insertAfter($('.qa-question-statement'));
 
+   var hidden = Math.ceil(answers.length / 2);
+
    for(var j = 0; j < answers.length; j++) {
       var $test = '';
 
       if (j === 0) {
          console.log(answers[j].input);
          $test = $('.test');
-         $test
-           .find('.input span')
-           .text(answers[j].input)
-           .end()
-           .find('.expected-output span')
-           .text(answers[j].output)
-           .end();
-      } else {
-         $test = $('.test').first().clone();
          $test
            .find('.test-name')
            .text('Test ' + (j + 1))
@@ -69,6 +62,26 @@ function createCodingArea(answers, $) {
            .end()
            .find('.expected-output span')
            .text(answers[j].output)
+           .end();
+      } else {
+         $test = $('.test').first().clone();
+
+         if (j >= hidden) {
+            console.log('WOOHOOOO');
+            $test
+              .find('.expected-output')
+              .addClass('qa-hidden');
+         }
+
+         $test
+           .find('.test-name')
+           .text('Test ' + (j + 1))
+           .end()
+           .find('.input span')
+           .text(answers[j].input)
+           .end()
+           .find('.expected-output span')
+           .text(j >= hidden ? 'hidden' : answers[j].output)
            .end()
            .insertAfter($('.test').last());
       }
@@ -95,6 +108,9 @@ function getScripts(questionType) {
 
    if (questionType !== 'Multiple Choice') {
       scripts += '<script src="https://cdn.jsdelivr.net/ace/1.2.3/min/ace.js"></script>';
+      scripts += '<script src="../js/coding.js"></script>';
+   } else {
+      scripts += '<script src="../js/multiple-choice.js"></script>';
    }
 
    scripts += '<script src="../js/script.js"></script>';
@@ -132,7 +148,7 @@ function createPage(data, $) {
 
    var html = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>' + data.questionName + '</title>' +
      '<link rel="stylesheet" href="../css/style.css">' +
-     '<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"></head>';
+     '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"></head>';
 
    html += createBody(data, $);
 

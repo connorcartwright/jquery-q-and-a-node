@@ -11,17 +11,20 @@ function checkMultipleChoiceAnswers(database, reqData, callback) {
       console.log('yaaay');
 
       var passed = true;
+      var numCorrect = 0;
 
       for(var i = 0; i < data.length; i++) {
          if (data[i].correct !== options[i]) {
             passed = false;
-            break;
+         } else {
+            numCorrect++;
          }
       }
 
       var response = {
          status: 200,
-         success: passed
+         success: passed,
+         numCorrect: numCorrect
       };
 
       callback(response);

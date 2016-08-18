@@ -35,7 +35,7 @@ linters:
     force_nesting: true
 
   NestingDepth:
-    max_depth: 8
+    max_depth: 10
 
   SelectorDepth:
       enabled: true

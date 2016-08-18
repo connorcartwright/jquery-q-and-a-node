@@ -6,6 +6,7 @@ var editQuestion = require('./post/edit-question');
 var getQuestionsForPage = require('./post/get-questions-for-page');
 var getQuestionCount = require('./post/get-question-count');
 var checkMultipleChoiceAnswers = require('./post/check-multiple-choice-answers');
+var checkCodingAnswers = require('./post/check-coding-answers');
 
 function handlePostRequest(reqData, callback) {
    'use strict';
@@ -28,10 +29,13 @@ function handlePostRequest(reqData, callback) {
 
       return getQuestionsForPage(database, reqData, callback);
    case 'checkMultipleChoiceAnswers':
-      console.log('CORRECT POST REQUEST WOOOOO');
-      console.log(reqData);
+      console.log('Check Multiple Choice Answers Request!');
 
       return checkMultipleChoiceAnswers(database, reqData, callback);
+   case 'checkCodingAnswers':
+      console.log('Check Coding Answers Request!');
+
+      return checkCodingAnswers(database, reqData, callback);
 }
 }
 

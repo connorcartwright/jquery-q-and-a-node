@@ -45,6 +45,23 @@ function getCodingAnswers(questionID, callback) {
    });
 }
 
+function getCodingOutputs(questionID, callback) {
+   'use strict';
+
+   var queryString = 'SELECT Output AS output ' +
+     'FROM CodingAnswers WHERE QuestionID=?';
+
+   connection.query(queryString, [questionID], function(err, result) {
+      if (err) {
+         console.log('Error occurred: ' + err.code);
+
+         return callback('Error');
+      } else {
+         return callback(result);
+      }
+   });
+}
+
 function addMultipleChoiceAnswer(questionID, optionText, correct) {
    'use strict';
 
@@ -96,6 +113,7 @@ module.exports = {
    addCodingAnswer: addCodingAnswer,
    removeCodingAnswers: removeCodingAnswers,
    getCodingAnswers: getCodingAnswers,
+   getCodingOutputs: getCodingOutputs,
    addMultipleChoiceAnswer: addMultipleChoiceAnswer,
    removeMultipleChoiceAnswers: removeMultipleChoiceAnswers,
    getMultipleChoiceAnswers: getMultipleChoiceAnswers

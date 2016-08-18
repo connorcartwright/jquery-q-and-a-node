@@ -1,4 +1,8 @@
+iframe {
+  display: none; }
+
 .qa-question {
+  font-family: Arial;
   height: 96%;
   margin: 2%;
   width: 96%; }
@@ -13,16 +17,19 @@
     margin-top: 4px; }
   .qa-question .qa-question-content {
     margin: 10px;
+    position: relative;
+    text-align: right;
     width: 640px; }
     .qa-question .qa-question-content .qa-question-statement {
       font-size: 14px;
-      margin: 0 0 14px; }
+      margin: 0 0 14px;
+      text-align: left; }
   .qa-question .submit-question {
-    float: right;
     margin: 14px 10px; }
 
 .qa-question-type-area {
-  margin: 14px 0; }
+  margin: 14px 0;
+  text-align: left; }
   .qa-question-type-area.multiple-choice .multiple-choice-option {
     height: 28px;
     margin: 4px 10px;
@@ -91,10 +98,16 @@
         margin: 0 2% 4px;
         min-height: 28px;
         width: 96%; }
+        .qa-question-type-area.coding .qa-coding-tests .tests .test i {
+          margin-left: 10px; }
         .qa-question-type-area.coding .qa-coding-tests .tests .test .glyphicon {
           margin-left: 14px; }
         .qa-question-type-area.coding .qa-coding-tests .tests .test .test-name {
           margin-left: 6px; }
+        .qa-question-type-area.coding .qa-coding-tests .tests .test .qa-test-correct {
+          color: #66ffab; }
+        .qa-question-type-area.coding .qa-coding-tests .tests .test .qa-test-wrong {
+          color: #f64747; }
         .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details {
           margin: 0 20px; }
           .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .input,
@@ -108,6 +121,15 @@
             .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .expected-output span {
               color: #a6e22a;
               font-size: 12px; }
+              .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .input span.wrong,
+              .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .output span.wrong,
+              .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .expected-output span.wrong {
+                color: #f64747; }
+            .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .input.qa-hidden span,
+            .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .output.qa-hidden span,
+            .qa-question-type-area.coding .qa-coding-tests .tests .test .test-details .expected-output.qa-hidden span {
+              color: #c5eff7;
+              font-style: italic; }
         .qa-question-type-area.coding .qa-coding-tests .tests .test.open {
           height: 146px; }
         .qa-question-type-area.coding .qa-coding-tests .tests .test.closed .input,
@@ -116,13 +138,15 @@
           display: none; }
 
 .qa-hints-area {
-  margin: 14px 0; }
+  margin: 14px 0;
+  text-align: left; }
   .qa-hints-area.closed .hints {
     display: none; }
   .qa-hints-area .hint-trigger {
     color: #3498db;
     cursor: pointer;
-    display: block; }
+    display: block;
+    margin-bottom: 10px; }
     .qa-hints-area .hint-trigger span {
       font-style: italic; }
   .qa-hints-area .js-hint {
@@ -140,3 +164,43 @@
       border-radius: 0 4px 4px 0; }
   .qa-hints-area .qa-hint-text {
     margin: 8px 0; }
+
+.btn {
+  border: solid 1px #d1d1d1;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 6px 14px; }
+  .btn.btn-success {
+    background-color: #5cb85c;
+    border-color: #1d621d; }
+  .btn.btn-default {
+    background-color: #ededed; }
+
+.qa-message-overlay {
+  background: rgba(66, 66, 66, 0.9);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100; }
+  .qa-message-overlay .qa-message {
+    display: table;
+    font-size: 40px;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%; }
+    .qa-message-overlay .qa-message.correct {
+      color: #66ffab; }
+    .qa-message-overlay .qa-message.wrong {
+      color: #f64747; }
+    .qa-message-overlay .qa-message span {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle; }
+      .qa-message-overlay .qa-message span .small {
+        display: inline-block;
+        font-size: 20px;
+        text-align: center; }
