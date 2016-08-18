@@ -12,8 +12,16 @@ $titanium: #666;
 $light-border: #dcdcdc;
 $code: #a6e22a;
 $cobalt: #3498db;
+$light-blue: #c5eff7;
+$white: #fff;
+$scarlet: #f64747;
+
+iframe {
+  display: none;
+}
 
 .qa-question {
+  font-family: Arial;
   height: 96%;
   margin: 2%;
   width: 96%;
@@ -34,16 +42,18 @@ $cobalt: #3498db;
   .qa-question-content {
 
     margin: 10px;
+    position: relative;
+    text-align: right;
     width: 640px;
 
     .qa-question-statement {
       font-size: 14px;
       margin: 0 0 14px;
+      text-align: left;
     }
   }
 
   .submit-question {
-    float: right;
     margin: 14px 10px;
   }
 
@@ -52,6 +62,7 @@ $cobalt: #3498db;
 .qa-question-type-area {
 
   margin: 14px 0;
+  text-align: left;
 
   &.multiple-choice {
     .multiple-choice-option {
@@ -147,12 +158,24 @@ $cobalt: #3498db;
           min-height: 28px;
           width: 96%;
 
+          i {
+            margin-left: 10px;
+          }
+
           .glyphicon {
             margin-left: 14px;
           }
 
           .test-name {
             margin-left: 6px;
+          }
+
+          .qa-test-correct {
+            color: $green;
+          }
+
+          .qa-test-wrong {
+            color: $scarlet;
           }
 
           .test-details {
@@ -168,8 +191,22 @@ $cobalt: #3498db;
               span {
                 color: $code;
                 font-size: 12px;
+
+                &.wrong {
+                  color: $scarlet;
+                }
               }
+
+              &.qa-hidden {
+                span {
+                  color: $light-blue;
+                  font-style: italic;
+                }
+              }
+
             }
+
+
           }
 
           &.open {
@@ -191,6 +228,7 @@ $cobalt: #3498db;
 
 .qa-hints-area {
   margin: 14px 0;
+  text-align: left;
 
   &.closed {
     .hints {
@@ -202,6 +240,7 @@ $cobalt: #3498db;
     color: $cobalt;
     cursor: pointer;
     display: block;
+    margin-bottom: 10px;
 
     span {
       font-style: italic;
@@ -233,4 +272,60 @@ $cobalt: #3498db;
     margin: 8px 0;
   }
 
+}
+
+.btn {
+  border: solid 1px $light-grey;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 6px 14px;
+
+  &.btn-success {
+    background-color: $fern;
+    border-color: $parsley;
+  }
+
+  &.btn-default {
+    background-color: $light;
+  }
+}
+
+.qa-message-overlay {
+  background: rgba( 66, 66, 66, .9 );
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+
+  .qa-message {
+    display: table;
+    font-size: 40px;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+
+    &.correct {
+      color: $green;
+    }
+
+    &.wrong {
+      color: $scarlet;
+    }
+
+    span {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+
+      .small {
+        display: inline-block;
+        font-size: 20px;
+        text-align: center;
+      }
+    }
+  }
 }
