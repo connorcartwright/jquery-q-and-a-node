@@ -141,7 +141,9 @@ $('.js-submit-question').on('click', function() {
     .always(function(data) {
       console.log('always');
       console.log(data);
-      console.log(data.success);
+      console.log('test');
+      console.log(data.response);
+      console.log('test');
       if (data.success) {
         displayMessage('Correct Answer!', true);
       } else {
