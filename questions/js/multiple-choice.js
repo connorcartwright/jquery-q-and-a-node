@@ -30,7 +30,7 @@ $('.js-submit-question').on('click', function() {
   var postData = getMultipleChoiceData(pageID, questionID);
 
   $.ajax({
-    url: 'http://localhost:8080',
+    url: 'https://cryptic-sands-74858.herokuapp.com',
     method: 'POST',
     data: postData,
     dataType: 'json',
