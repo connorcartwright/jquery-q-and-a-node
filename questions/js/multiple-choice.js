@@ -48,7 +48,7 @@ $('.js-submit-question').on('click', function() {
       if (data.success) {
         displayMessage('Correct Answer!', true);
       } else {
-        displayMessage('Wrong Answer! <br> <span class="small">Two options were wrong!</span>', false);
+        displayMessage('Wrong Answer! <br> <span class="small">' + data.numCorrect + ' options were wrong!</span>', false);
       }
     });
 
