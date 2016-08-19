@@ -70,6 +70,11 @@ function getOutputArray() {
     output.push(iframe.contentWindow.userCode());
   });
 
+  console.log('OUTPUT');
+  console.log(output);
+  console.log('OUTPUT');
+
+
   return output;
 
 }
