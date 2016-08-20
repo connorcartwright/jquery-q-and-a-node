@@ -21,10 +21,10 @@ function handlePostRequest(reqData, callback) {
    github
      .getUser() // Gets the User object (e.g. the object possessing the methods to work with the User API)
      .getProfile() // Retrieves the profile of the user
-     .then(function(user) {
+     .then(function() {
       var jQueryOrg = github.getOrganization('qa-test55');
 
-      return jQueryOrg.isMember(user.login);
+      return jQueryOrg.isMember('ConnorCartwright');
    })
      .then(function(isMember) {
       if (isMember) {
