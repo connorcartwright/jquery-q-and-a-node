@@ -13,6 +13,8 @@ function handlePostRequest(reqData, callback) {
 
    switch(reqData.action) {
    case 'addPage':
+      console.log('Add Page Request!');
+
       return addPage(database, reqData, callback);
    case 'addQuestion':
       console.log('Add Question Request!');
@@ -23,6 +25,8 @@ function handlePostRequest(reqData, callback) {
 
       return editQuestion(database, reqData, callback);
    case 'getQuestionCount':
+      console.log('Get Question Count Request!');
+
       return getQuestionCount(database, reqData, callback);
    case 'getQuestionsForPage':
       console.log('Get Questions For Page Request!');
