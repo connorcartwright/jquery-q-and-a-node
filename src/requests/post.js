@@ -14,25 +14,31 @@ function handlePostRequest(reqData, callback) {
 
    console.log('Access Token: ' + reqData.accessToken);
 
-   var github = new GitHub({
-      token: reqData.accessToken
-   });
+   var gh = new GitHub();
 
-   github
-     .getUser() // Gets the User object (e.g. the object possessing the methods to work with the User API)
-     .getProfile() // Retrieves the profile of the user
-     .then(function() {
-      var jQueryOrg = github.getOrganization('qa-test55');
+   var qaTest = gh.getOrganization('qa-test55');
 
-      return jQueryOrg.isMember('ConnorCartwright');
-   })
-     .then(function(isMember) {
-      if (isMember) {
-         console.log('The user is a member');
-      } else {
-         console.log('The user is NOT a member');
-      }
-   });
+   if (qaTest.isMember('Connor Cartwright')) {
+      console.log('The user is a member!');
+   } else {
+      console.log('The user is NOT a member!');
+   }
+
+   // Github
+   //   .getUser() // Gets the User object (e.g. the object possessing the methods to work with the User API)
+   //   .getProfile() // Retrieves the profile of the user
+   //   .then(function() {
+   //    var jQueryOrg = github.getOrganization('qa-test55');
+   //
+   //    Return jQueryOrg.isMember('ConnorCartwright');
+   // })
+   //   .then(function(isMember) {
+   //    if (isMember) {
+   //       console.log('The user is a member');
+   //    } else {
+   //       console.log('The user is NOT a member');
+   //    }
+   // });
 
    switch(reqData.action) {
    case 'addPage':
