@@ -7,9 +7,32 @@ var getQuestionsForPage = require('./post/get-questions-for-page');
 var getQuestionCount = require('./post/get-question-count');
 var checkMultipleChoiceAnswers = require('./post/check-multiple-choice-answers');
 var checkCodingAnswers = require('./post/check-coding-answers');
+var GitHub = require('github-api');
 
 function handlePostRequest(reqData, callback) {
    'use strict';
+
+   console.log('Access Token: ' + reqData.accessToken);
+
+   var github = new GitHub({
+      token: reqData.accessToken
+   });
+
+   github
+     .getUser() // Gets the User object (e.g. the object possessing the methods to work with the User API)
+     .getProfile() // Retrieves the profile of the user
+     .then(function(user) {
+      var jQueryOrg = github.getOrganization('qa-test55');
+
+      return jQueryOrg.isMember(user.login);
+   })
+     .then(function(isMember) {
+      if (isMember) {
+         console.log('The user is a member');
+      } else {
+         console.log('The user is NOT a member');
+      }
+   });
 
    switch(reqData.action) {
    case 'addPage':
