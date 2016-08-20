@@ -126,7 +126,7 @@ $('.js-submit-question').on('click', function() {
   var postData = getCodingData(pageID, questionID);
 
   $.ajax({
-    url: 'https://cryptic-sands-74858.herokuapp.com',
+    url: 'http://139.59.179.19:8080',
     method: 'POST',
     data: postData,
     dataType: 'json',
