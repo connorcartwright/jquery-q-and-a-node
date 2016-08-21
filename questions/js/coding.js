@@ -145,9 +145,9 @@ $('.js-submit-question').on('click', function() {
       console.log(data.response);
       console.log('test');
       if (data.success) {
-        displayMessage('Correct Answer!', true);
+        displayMessage('Correct!', true);
       } else {
-        displayMessage('Wrong Answer!', false);
+        displayMessage('Incorrect!', false);
       }
 
       updateTestDisplay(postData.output, data.response);

@@ -46,9 +46,9 @@ $('.js-submit-question').on('click', function() {
       console.log('always');
       console.log(data);
       if (data.success) {
-        displayMessage('Correct Answer!', true);
+        displayMessage('Correct!', true);
       } else {
-        displayMessage('Wrong Answer! <br> <span class="small">' + data.numCorrect + ' options were wrong!</span>', false);
+        displayMessage('Incorrect! <br> <span class="small">' + data.numCorrect + ' of your selected options are correct!</span>', false);
       }
     });
 
