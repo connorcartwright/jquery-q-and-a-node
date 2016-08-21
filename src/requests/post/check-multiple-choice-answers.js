@@ -16,6 +16,7 @@ function checkMultipleChoiceAnswers(database, reqData, callback) {
       for(var i = 0; i < data.length; i++) {
          if (data[i].correct !== options[i]) {
             passed = false;
+         } else if (data[i].correct) {
             numCorrect++;
          }
       }
