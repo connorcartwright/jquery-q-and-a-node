@@ -50,7 +50,7 @@ $('.js-submit-question').on('click', function() {
       } else {
         var message = '';
         if (data.numCorrect === 0) {
-          var numSelected = $('.multiple-choice .correct').length;
+          var numSelected = $('.multiple-choice .mc-option-text.correct').length;
           message = '<span class="small">' + numSelected + ' of your selected options are incorrect!</span>';
         } else {
           message = '<span class="small">' + data.numCorrect + ' of your selected options are correct!</span>';
