@@ -48,7 +48,14 @@ $('.js-submit-question').on('click', function() {
       if (data.success) {
         displayMessage('Correct!', true);
       } else {
-        displayMessage('Incorrect! <br> <span class="small">' + data.numCorrect + ' of your selected options are correct!</span>', false);
+        var message = '';
+        if (data.numCorrect === 0) {
+          var numSelected = $('.multiple-choice .correct').length;
+          message = '<span class="small">' + numSelected + ' of your selected options are incorrect!</span>';
+        } else {
+          message = '<span class="small">' + data.numCorrect + ' of your selected options are correct!</span>';
+        }
+        displayMessage('Incorrect! <br> ' + message, false);
       }
     });
 
