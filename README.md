@@ -1,6 +1,4 @@
-# jquery-q-and-a-node
-
-Node server for jQuery Learning Center - GSoC
+# Node server for jQuery Learning Center - GSoC
 
 ## Setup
 
