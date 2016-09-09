@@ -1,6 +1,6 @@
 module.exports = {
-   host: 'localhost',
-   user: 'root',
-   password: 'qatest1',
-   database: 'jqueryQA'
+   host: 'HOST_NAME',
+   user: 'USER_NAME',
+   password: 'PASSWORD',
+   database: 'DB_NAME'
 };
