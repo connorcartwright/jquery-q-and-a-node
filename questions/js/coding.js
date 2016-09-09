@@ -126,7 +126,7 @@ $('.js-submit-question').on('click', function() {
   var postData = getCodingData(pageID, questionID);
 
   $.ajax({
-    url: 'http://139.59.179.19:8080',
+    url: 'http://SERVER_IP:PORT',
     method: 'POST',
     data: postData,
     dataType: 'json',
