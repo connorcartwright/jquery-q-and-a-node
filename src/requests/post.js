@@ -7,40 +7,16 @@ var getQuestionsForPage = require('./post/get-questions-for-page');
 var getQuestionCount = require('./post/get-question-count');
 var checkMultipleChoiceAnswers = require('./post/check-multiple-choice-answers');
 var checkCodingAnswers = require('./post/check-coding-answers');
-var GitHub = require('github-api');
+var checkAuth = require('./post/check-auth');
 
 function handlePostRequest(reqData, callback) {
    'use strict';
 
-   console.log('Access Token: ' + reqData.accessToken);
-
-   var gh = new GitHub();
-
-   var qaTest = gh.getOrganization('qa-test55');
-
-   if (qaTest.isMember('Connor Cartwright')) {
-      console.log('The user is a member!');
-   } else {
-      console.log('The user is NOT a member!');
-   }
-
-   // Github
-   //   .getUser() // Gets the User object (e.g. the object possessing the methods to work with the User API)
-   //   .getProfile() // Retrieves the profile of the user
-   //   .then(function() {
-   //    var jQueryOrg = github.getOrganization('qa-test55');
-   //
-   //    Return jQueryOrg.isMember('ConnorCartwright');
-   // })
-   //   .then(function(isMember) {
-   //    if (isMember) {
-   //       console.log('The user is a member');
-   //    } else {
-   //       console.log('The user is NOT a member');
-   //    }
-   // });
-
    switch(reqData.action) {
+   case 'checkAuth':
+      console.log('Checking Auth request!');
+
+      return checkAuth(reqData.accessToken, callback);
    case 'addPage':
       console.log('Add Page Request!');
 
