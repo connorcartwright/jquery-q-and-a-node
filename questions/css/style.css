@@ -170,10 +170,15 @@ iframe {
   border-radius: 5px;
   cursor: pointer;
   font-size: 14px;
-  padding: 6px 14px; }
+  padding: 6px 14px;
+  transition: .4s ease; }
   .btn.btn-success {
     background-color: #5cb85c;
-    border-color: #1d621d; }
+    border-color: #5cb85c;
+    color: #fff; }
+    .btn.btn-success:hover {
+      background-color: #449d44;
+      border-color: #449d44; }
   .btn.btn-default {
     background-color: #ededed; }
 

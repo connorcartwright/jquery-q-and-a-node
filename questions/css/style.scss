@@ -2,6 +2,7 @@ $orange: #f0af0b;
 $fern: #5cb85c;
 $mint-green: #e7ffe1;
 $green: #66ffab;
+$dark-green: #449d44;
 $light: #ededed;
 $light-grey: #d1d1d1;
 $parsley: #1d621d;
@@ -280,10 +281,17 @@ iframe {
   cursor: pointer;
   font-size: 14px;
   padding: 6px 14px;
+  transition: .4s ease;
 
   &.btn-success {
     background-color: $fern;
-    border-color: $parsley;
+    border-color: $fern;
+    color: $white;
+
+    &:hover {
+      background-color: $dark-green;
+      border-color: $dark-green;
+    }
   }
 
   &.btn-default {
