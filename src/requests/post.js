@@ -13,44 +13,41 @@ var deleteQuestion = require('./post/delete-question');
 function handlePostRequest(reqData, callback) {
    'use strict';
 
-   switch(reqData.action) {
-   case 'deleteQuestion':
-      console.log('Deleting question!');
+   console.log('Post Request: ' + reqData.action);
 
-      return deleteQuestion(database, reqData.questionID, callback);
-   case 'checkAuth':
-      console.log('Checking Auth request!');
-
+   if (reqData.action === 'checkAuth') {
       return checkAuth(reqData.accessToken, callback);
-   case 'addPage':
-      console.log('Add Page Request!');
+   } else {
+      checkAuth(reqData.accessToken, function(data) {
+         if (data.response) {
+            switch(reqData.action) {
+               case 'deleteQuestion':
+                  return deleteQuestion(database, reqData.questionID, reqData.pageID, callback);
+               case 'addPage':
+                  return addPage(database, reqData, callback);
+               case 'addQuestion':
+                  return addQuestion(database, reqData, callback);
+               case 'editQuestion':
+                  return editQuestion(database, reqData, callback);
+               case 'getQuestionCount':
+                  return getQuestionCount(database, reqData, callback);
+               case 'getQuestionsForPage':
+                  return getQuestionsForPage(database, reqData, callback);
+               case 'checkMultipleChoiceAnswers':
+                  return checkMultipleChoiceAnswers(database, reqData, callback);
+               case 'checkCodingAnswers':
+                  return checkCodingAnswers(database, reqData, callback);
+            }
+         } else {
+            var response = {
+               status: 401,
+               success: 'Unauthorised Access'
+            };
 
-      return addPage(database, reqData, callback);
-   case 'addQuestion':
-      console.log('Add Question Request!');
-
-      return addQuestion(database, reqData, callback);
-   case 'editQuestion':
-      console.log('Edit Question Request!');
-
-      return editQuestion(database, reqData, callback);
-   case 'getQuestionCount':
-      console.log('Get Question Count Request!');
-
-      return getQuestionCount(database, reqData, callback);
-   case 'getQuestionsForPage':
-      console.log('Get Questions For Page Request!');
-
-      return getQuestionsForPage(database, reqData, callback);
-   case 'checkMultipleChoiceAnswers':
-      console.log('Check Multiple Choice Answers Request!');
-
-      return checkMultipleChoiceAnswers(database, reqData, callback);
-   case 'checkCodingAnswers':
-      console.log('Check Coding Answers Request!');
-
-      return checkCodingAnswers(database, reqData, callback);
-}
+            callback(response);
+         }
+      });
+   }
 }
 
 module.exports = handlePostRequest;
