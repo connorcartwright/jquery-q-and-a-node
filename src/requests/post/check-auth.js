@@ -12,7 +12,7 @@ function checkAuth(accessToken, callback) {
      .getUser()
      .getProfile()
      .then(function(profile) {
-      var org = github.getOrganization('bruhack');
+      var org = github.getOrganization('ORGANISATION_NAME');
 
       return org.isMember(profile.data.login);
    })
