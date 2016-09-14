@@ -1,4 +1,6 @@
-function deleteQuestion(database, questionID, callback) {
+var fs = require('fs');
+
+function deleteQuestion(database, questionID, pageID, callback) {
    'use strict';
 
    database.questionQueries.deleteQuestion(questionID);
@@ -7,6 +9,8 @@ function deleteQuestion(database, questionID, callback) {
       status: 200,
       success: 'Question deleted successfully'
    };
+
+   fs.unlinkSync('./questions/page-' + pageID + '/' + questionID + '.html');
 
    return callback(response);
 }
