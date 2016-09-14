@@ -8,11 +8,16 @@ var getQuestionCount = require('./post/get-question-count');
 var checkMultipleChoiceAnswers = require('./post/check-multiple-choice-answers');
 var checkCodingAnswers = require('./post/check-coding-answers');
 var checkAuth = require('./post/check-auth');
+var deleteQuestion = require('./post/delete-question');
 
 function handlePostRequest(reqData, callback) {
    'use strict';
 
    switch(reqData.action) {
+   case 'deleteQuestion':
+      console.log('Deleting question!');
+
+      return deleteQuestion(database, reqData.questionID, callback);
    case 'checkAuth':
       console.log('Checking Auth request!');
 
