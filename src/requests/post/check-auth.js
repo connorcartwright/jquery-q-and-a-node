@@ -17,13 +17,17 @@ function checkAuth(accessToken, callback) {
       return org.isMember(profile.data.login);
    })
      .then(function(isMember) {
-      var response = {
-         status: 200,
-         success: 'Added Successfully',
-         response: isMember
-      };
+      if (callback) {
+         var response = {
+            status: 200,
+            success: 'Added Successfully',
+            response: isMember
+         };
 
-      callback(response);
+         callback(response);
+      } else {
+         return isMember;
+      }
    });
 }
 
