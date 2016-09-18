@@ -52,6 +52,7 @@ module.exports = function(grunt) {
          },
          src: [
              '<%= config.src %>/**/*.js',
+             'questions/js/**/*.js',
              'Gruntfile.js',
              'server.js'
          ]
@@ -64,6 +65,7 @@ module.exports = function(grunt) {
          },
          src: [
              '<%= config.src %>/**/*.js',
+            'questions/js/**/*.js',
              'Gruntfile.js',
            'server.js'
          ]
@@ -71,7 +73,12 @@ module.exports = function(grunt) {
 
       watch: {
          js: {
-            files: ['<%= config.src %>/**/*.js', 'Gruntfile.js', 'server.js'],
+            files: [
+'<%= config.src %>/**/*.js',
+ 'questions/js/**/*.js',
+ 'Gruntfile.js',
+ 'server.js'
+],
             tasks: ['jshint', 'jscs']
          },
          css: {
