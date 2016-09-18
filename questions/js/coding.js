@@ -1,158 +1,206 @@
+require('bind-hints');
+var displayMessage = require('./display-message');
+
 function initialiseEditor() {
-  var questionCode = $('#qa-code-editor').data('code');
-  var editor = ace.edit('qa-code-editor');
-  editor.setTheme('ace/theme/monokai');
-  editor.getSession().setMode('ace/mode/javascript');
-  editor.setValue(questionCode);
+   'use strict';
+
+   var questionCode = $('#qa-code-editor').data('code');
+   var editor = ace.edit('qa-code-editor');
+
+   editor.setTheme('ace/theme/monokai');
+   editor.getSession().setMode('ace/mode/javascript');
+   editor.setValue(questionCode);
 }
 
 function initialiseCodeFrame() {
-  var editor = ace.edit('qa-code-editor');
+   'use strict';
 
-  var iframe = document.createElement('iframe');
-  iframe.id = 'coding-test';
-  document.body.appendChild(iframe);
+   var editor = ace.edit('qa-code-editor');
 
-  var code = editor.getValue();
+   var iframe = document.createElement('iframe');
 
-  var jquery = '<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>';
-  var userFunction = '<script id="user-code"> function userCode() { ' + code + ' } </script>';
-  var scripts = jquery + userFunction;
+   iframe.id = 'coding-test';
+   document.body.appendChild(iframe);
 
-  var container = '<div class="qa-input"></div>';
-  var html = '<body>' + container + scripts + '</body>';
+   var code = editor.getValue();
 
-  document.body.appendChild(iframe);
-  iframe.contentWindow.document.open();
-  iframe.contentWindow.document.write(html);
-  iframe.contentWindow.document.close();
+   var jquery = '<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>';
+   var userFunction = '<script id="user-code"> function userCode() { try { ' + code +
+     ' } catch(e) { return { pass: false, data: e } } } </script>';
+   var scripts = jquery + userFunction;
+
+   var container = '<div class="qa-input"></div>';
+   var html = '<body>' + container + scripts + '</body>';
+
+   document.body.appendChild(iframe);
+   iframe.contentWindow.document.open();
+   iframe.contentWindow.document.write(html);
+   iframe.contentWindow.document.close();
 }
 
 $('.test').on('click', function() {
-  if ($(this).hasClass('closed')) {
-    $('.test.open').toggleClass('closed open');
-    $(this).toggleClass('closed open');
-  } else {
-    $('.test.open').toggleClass('closed open');
-  }
+   'use strict';
+
+   if ($(this).hasClass('closed')) {
+      $('.test.open').toggleClass('closed open');
+      $(this).toggleClass('closed open');
+   } else {
+      $('.test.open').toggleClass('closed open');
+   }
 });
 
+function resetIframe() {
+   'use strict';
+
+   var iframe = document.getElementById('coding-test');
+   var editor = ace.edit('qa-code-editor');
+   var code = editor.getValue();
+
+   iframe.contentWindow.document.getElementById('user-code').remove();
+
+   var jquery = '<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>';
+   var userFunction = '<script id="user-code"> function userCode() { try { ' + code +
+     ' } catch(e) { return { pass: false, data: e } } } </script>';
+   var scripts = jquery + userFunction;
+
+   var container = '<div class="qa-input"></div>';
+   var html = '<body>' + container + scripts + '</body>';
+
+   iframe.contentWindow.document.open();
+   iframe.contentWindow.document.write(html);
+   iframe.contentWindow.document.close();
+
+   return iframe;
+}
+
 function getOutputArray() {
-  var iframe = document.getElementById("coding-test");
-  var $iframe = $('#coding-test');
+   'use strict';
 
-  var editor = ace.edit('qa-code-editor');
-  var code = editor.getValue();
-  console.log('--- --- --- code --- --- --- ');
-  console.log(code);
-  console.log('--- --- --- code --- --- --- ');
-  iframe.contentWindow.document.getElementById('user-code').remove();
+   var iframe = resetIframe();
+   var $iframe = $('#coding-test');
+   var outputArray = [];
+   var passed = true;
 
-  var jquery = '<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>';
-  var userFunction = '<script id="user-code"> function userCode() { ' + code + ' } </script>';
-  var scripts = jquery + userFunction;
+   $('.input').each(function() {
+      var input = $(this).find('span').text();
 
-  var container = '<div class="qa-input"></div>';
-  var html = '<body>' + container + scripts + '</body>';
+      $iframe.contents().find('.qa-input').html(input);
 
-  iframe.contentWindow.document.open();
-  iframe.contentWindow.document.write(html);
-  iframe.contentWindow.document.close();
+      var output = iframe.contentWindow.userCode();
 
-  iframe.contentWindow.userCode('<script id="user-code"> function userCode() { ' + code + ' } </script>');
-  console.log(iframe.contentWindow.userCode());
+      if (output[0]) {
+         outputArray.push(output);
+      } else {
+         passed = false;
 
-  var output = [];
+         output.error = true;
 
-  $('.input').each(function() {
-    var input = $(this).find('span').text();
-    $iframe.contents().find('.qa-input').html(input);
-    output.push(iframe.contentWindow.userCode());
-  });
+         console.log('in error');
+         console.log('output.data');
+         console.log(JSON.stringify(output.data.toString()));
+         console.log('output.data');
 
-  return output;
+         outputArray.push(output.data.toString());
 
+         return false;
+      }
+   });
+
+   return {
+      passed: passed,
+      data: outputArray
+   };
 }
 
 function updateTestDisplay(output, response) {
-  console.log('yes');
-  console.log(response);
-  console.log(response[0]);
-  console.log(response[1]);
-  output = JSON.parse(output);
-  var i = 0;
+   'use strict';
 
-  $('.test').each(function () {
-    var correct = $('<i class="fa ' + (response[i] ? 'fa-check qa-test-correct' : 'fa-times qa-test-wrong') + '" aria-hidden="true"></i>');
-    correct.insertAfter($(this).find('.test-name'));
+   output = JSON.parse(output);
+   var i = 0;
 
-    var outputText = $(this).find('.output span');
+   $('.test').each(function() {
+      var $correct = $('<i class="fa ' + (response[i] ? 'fa-check qa-test-correct' :
+          'fa-times qa-test-wrong') + '" aria-hidden="true"></i>');
 
-    if (response[i]) {
-      outputText.addClass('correct');
-    } else {
-      outputText.addClass('wrong');
-    }
+      $correct.insertAfter($(this).find('.test-name'));
 
-    outputText.text(output[i]);
+      var outputText = $(this).find('.output span');
 
-    i++;
-  });
+      if (response[i]) {
+         outputText.addClass('correct');
+      } else {
+         outputText.addClass('wrong');
+      }
+
+      outputText.text(output[i]);
+
+      i++;
+   });
 }
 
 function getCodingData(pageID, questionID) {
-  var editor = ace.edit('qa-code-editor');
+   'use strict';
 
-  var output = getOutputArray();
-  console.log(output);
+   var output = getOutputArray();
 
-  var data = {
-    pageID: pageID,
-    questionID: questionID,
-    action: 'checkCodingAnswers',
-    output: JSON.stringify(output)
-  };
+   if (output.passed) {
+      var data = {
+         pageID: pageID,
+         questionID: questionID,
+         action: 'checkCodingAnswers',
+         output: JSON.stringify(output.data)
+      };
 
-  return data;
+      return data;
+   } else {
+      console.log('in else');
+      console.log(output.data);
+      updateTestDisplay(JSON.stringify(output));
+   }
 }
 
 $('.js-submit-question').on('click', function() {
-  var pageID = $('.qa-question').data('pageid');
-  var questionID = $('.qa-question').data('questionid');
+   'use strict';
 
-  $('.qa-test-correct, .qa-test-wrong').remove();
-  $('.output span').removeClass('wrong correct');
+   var pageID = $('.qa-question').data('pageid');
+   var questionID = $('.qa-question').data('questionid');
 
-  var postData = getCodingData(pageID, questionID);
+   $('.qa-test-correct, .qa-test-wrong').remove();
+   $('.output span').removeClass('wrong correct');
 
-  $.ajax({
-    url: 'http://SERVER_IP:PORT',
-    method: 'POST',
-    data: postData,
-    dataType: 'json',
-    crossDomain: true
-  })
-    .done(function() {
+   var postData = getCodingData(pageID, questionID);
+
+   $.ajax({
+      url: 'http://localhost:8080',
+      method: 'POST',
+      data: postData,
+      dataType: 'json',
+      crossDomain: true
+   })
+     .done(function() {
       console.log('done/success');
-    })
-    .fail(function() {
+   })
+     .fail(function() {
       console.log('fail/error');
-    })
-    .always(function(data) {
+   })
+     .always(function(data) {
       console.log('always');
       console.log(data);
       console.log('test');
       console.log(data.response);
       console.log('test');
+
       if (data.success) {
-        displayMessage('Correct!', true);
+         displayMessage('Correct!', true);
       } else {
-        displayMessage('Incorrect!', false);
+         displayMessage('Incorrect!', false);
       }
 
-      updateTestDisplay(postData.output, data.response);
-    });
+      console.log('successful post: ');
+      console.log(postData.output);
 
+      updateTestDisplay(postData.output, data.response);
+   });
 });
 
 initialiseEditor();
