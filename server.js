@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var fs = require('fs');
 
+require('./src/database/database').createTables();
 var handlePostRequest = require('./src/requests/post');
 
 app.use(bodyParser.urlencoded({
