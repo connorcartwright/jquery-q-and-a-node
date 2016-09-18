@@ -11,9 +11,7 @@
     "ace": false,
     "getSelection": false,
     "module": false,
-    "pages": false,
-    "resizeModalBody": false,
-    "wpAjax": false
+    "displayMessage": false
   },
   "iterator": false,
   "jquery": true,
@@ -33,7 +31,7 @@
   "singleGroups": true,
   "strict": true,
   "undef": true,
-  "unused": true,
+  "unused": false,
   "varstmt": false,
   "browser": true
 }
