@@ -61,6 +61,16 @@ function createMultipleChoiceAnswerTable() {
      ');');
 }
 
+function createAccessTokenTable() {
+   'use strict';
+
+   connection.query('CREATE TABLE IF NOT EXISTS AccessTokens (' +
+     'TokenID MEDIUMINT NOT NULL AUTO_INCREMENT,' +
+     'AccessToken VARCHAR(100) NOT NULL,' +
+     'PRIMARY KEY (TokenID)' +
+     ');');
+}
+
 function createTables() {
    'use strict';
 
@@ -68,6 +78,7 @@ function createTables() {
    createQuestionTable();
    createCodingAnswerTable();
    createMultipleChoiceAnswerTable();
+   createAccessTokenTable();
 }
 
 module.exports = createTables;
