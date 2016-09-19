@@ -49,7 +49,7 @@ $('.test').on('click', function() {
    }
 });
 
-function resetIframe() {
+function resetCodeFrame() {
    'use strict';
 
    var iframe = document.getElementById('coding-test');
@@ -76,7 +76,7 @@ function resetIframe() {
 function getOutputArray() {
    'use strict';
 
-   var iframe = resetIframe();
+   var iframe = resetCodeFrame();
    var $iframe = $('#coding-test');
    var outputArray = [];
    var passed = true;
@@ -93,16 +93,11 @@ function getOutputArray() {
       } else {
          passed = false;
 
-         output.error = true;
-
-         console.log('in error');
-         console.log('output.data');
-         console.log(JSON.stringify(output.data.toString()));
-         console.log('output.data');
-
-         outputArray.push(output.data.toString());
-
-         return false;
+         if (!output.data) {
+            outputArray.push('Nothing returned');
+         } else {
+            outputArray.push(output.data.toString());
+         }
       }
    });
 
@@ -115,7 +110,9 @@ function getOutputArray() {
 function updateTestDisplay(output, response) {
    'use strict';
 
-   output = JSON.parse(output);
+   console.log('output: ');
+   console.log(output);
+
    var i = 0;
 
    $('.test').each(function() {
@@ -142,21 +139,22 @@ function getCodingData(pageID, questionID) {
    'use strict';
 
    var output = getOutputArray();
+   var data;
 
    if (output.passed) {
-      var data = {
+      data = {
          pageID: pageID,
          questionID: questionID,
          action: 'checkCodingAnswers',
          output: JSON.stringify(output.data)
       };
-
-      return data;
    } else {
       console.log('in else');
-      console.log(output.data);
-      updateTestDisplay(JSON.stringify(output));
+      console.log(output);
+      updateTestDisplay(output.data, [false, false, false]);
    }
+
+   return data;
 }
 
 $('.js-submit-question').on('click', function() {
@@ -170,37 +168,32 @@ $('.js-submit-question').on('click', function() {
 
    var postData = getCodingData(pageID, questionID);
 
-   $.ajax({
-      url: 'http://localhost:8080',
-      method: 'POST',
-      data: postData,
-      dataType: 'json',
-      crossDomain: true
-   })
-     .done(function() {
-      console.log('done/success');
-   })
-     .fail(function() {
-      console.log('fail/error');
-   })
-     .always(function(data) {
-      console.log('always');
-      console.log(data);
-      console.log('test');
-      console.log(data.response);
-      console.log('test');
+   if (postData) {
+      $.ajax({
+         url: 'http://localhost:8080',
+         method: 'POST',
+         data: postData,
+         dataType: 'json',
+         crossDomain: true
+      })
+        .done(function() {
+         console.log('done/success');
+      })
+        .fail(function() {
+         console.log('fail/error');
+      })
+        .always(function(data) {
+         console.log('always');
 
-      if (data.success) {
-         displayMessage('Correct!', true);
-      } else {
-         displayMessage('Incorrect!', false);
-      }
+         if (data.success) {
+            displayMessage('Correct!', true);
+         } else {
+            displayMessage('Incorrect!', false);
+         }
 
-      console.log('successful post: ');
-      console.log(postData.output);
-
-      updateTestDisplay(postData.output, data.response);
-   });
+         updateTestDisplay(JSON.parse(postData.output), data.response);
+      });
+   }
 });
 
 initialiseEditor();
